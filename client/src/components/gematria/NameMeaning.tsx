@@ -6,7 +6,7 @@ interface NameMeaningProps {
 }
 
 const HEBREW_NAME_MEANINGS = {
-  // Common Hebrew names and their meanings
+  // Biblical Patriarchs and Matriarchs
   'אברהם': {
     meaning: 'Father of Many Nations',
     etymology: 'From אב (father) + המון (multitude)',
@@ -42,6 +42,8 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From לאה (to be weary)',
     significance: 'Mother of six tribes, represents perseverance and fertility'
   },
+
+  // Leaders and Prophets
   'משה': {
     meaning: 'Drawn Out (from water)',
     etymology: 'From משה (to draw out)',
@@ -67,6 +69,23 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From שלם (peace, complete)',
     significance: 'Wisest king, builder of the First Temple'
   },
+  'שמואל': {
+    meaning: 'Heard by God',
+    etymology: 'From שמע (heard) + אל (God)',
+    significance: 'Last judge, first prophet, represents divine calling'
+  },
+  'אליהו': {
+    meaning: 'My God is YHVH',
+    etymology: 'From אלי (my God) + יה (divine name)',
+    significance: 'Great prophet, herald of the Messiah'
+  },
+  'אלישע': {
+    meaning: 'God is Salvation',
+    etymology: 'From אלי (my God) + שע (salvation)',
+    significance: 'Prophet, represents divine healing and miracles'
+  },
+
+  // The Twelve Tribes
   'יוסף': {
     meaning: 'He Will Add',
     etymology: 'From יסף (to add, increase)',
@@ -76,6 +95,26 @@ const HEBREW_NAME_MEANINGS = {
     meaning: 'Son of the Right Hand',
     etymology: 'From בן (son) + ימין (right hand)',
     significance: 'Beloved youngest son, represents strength and favor'
+  },
+  'יהודה': {
+    meaning: 'Praise',
+    etymology: 'From ידה (to praise, thank)',
+    significance: 'Royal tribe, source of kingship and Messiah'
+  },
+  'ראובן': {
+    meaning: 'See, a Son',
+    etymology: 'From ראה (see) + בן (son)',
+    significance: 'Firstborn, represents vision and leadership'
+  },
+  'שמעון': {
+    meaning: 'Heard',
+    etymology: 'From שמע (to hear)',
+    significance: 'Represents attentive listening to divine voice'
+  },
+  'לוי': {
+    meaning: 'Joined / Attached',
+    etymology: 'From לוה (to join, accompany)',
+    significance: 'Priestly tribe, represents divine service'
   },
   'דן': {
     meaning: 'Judge',
@@ -107,46 +146,8 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From זבל (to dwell, honor)',
     significance: 'Represents commerce and divine provision'
   },
-  'יהודה': {
-    meaning: 'Praise',
-    etymology: 'From ידה (to praise, thank)',
-    significance: 'Royal tribe, source of kingship and Messiah'
-  },
-  'שמעון': {
-    meaning: 'Heard',
-    etymology: 'From שמע (to hear)',
-    significance: 'Represents attentive listening to divine voice'
-  },
-  'ראובן': {
-    meaning: 'See, a Son',
-    etymology: 'From ראה (see) + בן (son)',
-    significance: 'Firstborn, represents vision and leadership'
-  },
-  'לוי': {
-    meaning: 'Joined / Attached',
-    etymology: 'From לוה (to join, accompany)',
-    significance: 'Priestly tribe, represents divine service'
-  },
-  'אליהו': {
-    meaning: 'My God is YHVH',
-    etymology: 'From אלי (my God) + יה (divine name)',
-    significance: 'Great prophet, herald of the Messiah'
-  },
-  'אלישע': {
-    meaning: 'God is Salvation',
-    etymology: 'From אלי (my God) + שע (salvation)',
-    significance: 'Prophet, represents divine healing and miracles'
-  },
-  'שמואל': {
-    meaning: 'Heard by God',
-    etymology: 'From שמע (heard) + אל (God)',
-    significance: 'Last judge, first prophet, represents divine calling'
-  },
-  'נח': {
-    meaning: 'Rest / Comfort',
-    etymology: 'From נוח (to rest)',
-    significance: 'Righteous man saved from the flood, new beginning'
-  },
+
+  // First Humans and Early Figures
   'אדם': {
     meaning: 'Man / Red Earth',
     etymology: 'From אדמה (earth, ground)',
@@ -157,55 +158,64 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From חיה (to live)',
     significance: 'First woman, mother of all living'
   },
-  'נועה': {
-    meaning: 'Movement / Beauty',
-    etymology: 'From נוע (to move, wander)',
-    significance: 'Represents grace and divine beauty'
+  'נח': {
+    meaning: 'Rest / Comfort',
+    etymology: 'From נוח (to rest)',
+    significance: 'Righteous man saved from the flood, new beginning'
   },
-  'רינה': {
-    meaning: 'Joyful Song',
-    etymology: 'From רנן (to sing joyfully)',
-    significance: 'Represents praise and celebration'
-  },
-  'ברכה': {
-    meaning: 'Blessing',
-    etymology: 'From ברך (to bless)',
-    significance: 'Divine favor and abundance from above'
-  },
-  'שלום': {
-    meaning: 'Peace',
-    etymology: 'From שלם (to be complete, peaceful)',
-    significance: 'Divine harmony and completeness'
-  },
-  'חן': {
+
+  // Female Names with Spiritual Significance
+  'חנה': {
     meaning: 'Grace / Favor',
     etymology: 'From חנן (to be gracious)',
-    significance: 'Divine grace and charm'
+    significance: 'Mother of Samuel, symbol of prayer and devotion'
   },
+  'אסתר': {
+    meaning: 'Hidden / Star',
+    etymology: 'From סתר (to hide) or from Persian "star"',
+    significance: 'Queen who saved the Jewish people, represents hidden strength'
+  },
+  'רות': {
+    meaning: 'Friend / Companion',
+    etymology: 'From רעה (to befriend)',
+    significance: 'Symbol of loyalty and conversion, ancestor of David'
+  },
+  'נעמי': {
+    meaning: 'Pleasant / Beautiful',
+    etymology: 'From נעם (pleasantness)',
+    significance: 'Mother-in-law of Ruth, represents wisdom through suffering'
+  },
+  'דינה': {
+    meaning: 'Judged / Vindicated',
+    etymology: 'From דין (judgment)',
+    significance: 'Daughter of Jacob, represents justice and protection'
+  },
+  'תמר': {
+    meaning: 'Palm Tree',
+    etymology: 'From תמר (date palm)',
+    significance: 'Symbol of righteousness and uprightness'
+  },
+  'ציפורה': {
+    meaning: 'Bird',
+    etymology: 'From ציפור (bird)',
+    significance: 'Wife of Moses, represents freedom and spiritual flight'
+  },
+
+  // Divine Attributes and Spiritual Concepts
   'אמונה': {
     meaning: 'Faith',
     etymology: 'From אמן (to believe, be faithful)',
     significance: 'Trust and steadfast belief in God'
   },
-  'חיה': {
-    meaning: 'Life',
-    etymology: 'From חיי (life, living)',
-    significance: 'Divine life force and vitality'
+  'אהבה': {
+    meaning: 'Love',
+    etymology: 'From אהב (to love)',
+    significance: 'Divine love and affection'
   },
-  'שמחה': {
-    meaning: 'Joy',
-    etymology: 'From שמח (to rejoice)',
-    significance: 'Divine joy and happiness'
-  },
-  'זהר': {
-    meaning: 'Radiance / Brightness',
-    etymology: 'From זהר (to shine, be bright)',
-    significance: 'Divine light and spiritual illumination'
-  },
-  'אור': {
-    meaning: 'Light',
-    etymology: 'From אור (light)',
-    significance: 'Divine illumination and spiritual enlightenment'
+  'שלום': {
+    meaning: 'Peace',
+    etymology: 'From שלם (to be complete, peaceful)',
+    significance: 'Divine harmony and completeness'
   },
   'חכמה': {
     meaning: 'Wisdom',
@@ -237,11 +247,6 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From רחם (womb, compassion)',
     significance: 'Divine mercy and motherly compassion'
   },
-  'אהבה': {
-    meaning: 'Love',
-    etymology: 'From אהב (to love)',
-    significance: 'Divine love and affection'
-  },
   'יראה': {
     meaning: 'Fear / Awe of God',
     etymology: 'From ירא (to fear, revere)',
@@ -252,6 +257,8 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From קדש (to be holy, separate)',
     significance: 'Divine sanctity and separation for sacred purpose'
   },
+
+  // Spiritual Actions and States
   'תפילה': {
     meaning: 'Prayer',
     etymology: 'From פלל (to pray, intercede)',
@@ -282,10 +289,98 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From קוה (to wait, hope)',
     significance: 'Divine expectation and trust in the future'
   },
-  'ממשה': {
-    meaning: 'From Moses',
-    etymology: 'Related to משה (Moses)',
-    significance: 'Connected to the great lawgiver and prophet'
+
+  // Light and Joy
+  'אור': {
+    meaning: 'Light',
+    etymology: 'From אור (light)',
+    significance: 'Divine illumination and spiritual enlightenment'
+  },
+  'זהר': {
+    meaning: 'Radiance / Brightness',
+    etymology: 'From זהר (to shine, be bright)',
+    significance: 'Divine light and spiritual illumination'
+  },
+  'נר': {
+    meaning: 'Candle / Light',
+    etymology: 'From נר (lamp, candle)',
+    significance: 'Divine light that guides through darkness'
+  },
+  'שמחה': {
+    meaning: 'Joy',
+    etymology: 'From שמח (to rejoice)',
+    significance: 'Divine joy and happiness'
+  },
+  'רינה': {
+    meaning: 'Joyful Song',
+    etymology: 'From רנן (to sing joyfully)',
+    significance: 'Represents praise and celebration'
+  },
+  'גילה': {
+    meaning: 'Rejoicing',
+    etymology: 'From גיל (to rejoice)',
+    significance: 'Divine joy and exultation'
+  },
+
+  // Life and Vitality
+  'חיה': {
+    meaning: 'Life',
+    etymology: 'From חיי (life, living)',
+    significance: 'Divine life force and vitality'
+  },
+  'חן': {
+    meaning: 'Grace / Favor',
+    etymology: 'From חנן (to be gracious)',
+    significance: 'Divine grace and charm'
+  },
+  'ברכה': {
+    meaning: 'Blessing',
+    etymology: 'From ברך (to bless)',
+    significance: 'Divine favor and abundance from above'
+  },
+
+  // Beauty and Excellence
+  'נועה': {
+    meaning: 'Movement / Beauty',
+    etymology: 'From נוע (to move, wander)',
+    significance: 'Represents grace and divine beauty'
+  },
+  'יפה': {
+    meaning: 'Beautiful',
+    etymology: 'From יפה (to be beautiful)',
+    significance: 'Divine beauty and aesthetic perfection'
+  },
+  'הדר': {
+    meaning: 'Glory / Splendor',
+    etymology: 'From הדר (to glorify, honor)',
+    significance: 'Divine majesty and magnificence'
+  },
+
+  // Modern Hebrew Names
+  'אריאל': {
+    meaning: 'Lion of God',
+    etymology: 'From אריה (lion) + אל (God)',
+    significance: 'Divine strength and courage'
+  },
+  'גבריאל': {
+    meaning: 'Strength of God',
+    etymology: 'From גבר (strength) + אל (God)',
+    significance: 'Archangel, divine messenger and strength'
+  },
+  'מיכאל': {
+    meaning: 'Who is Like God?',
+    etymology: 'From מי (who) + כ (like) + אל (God)',
+    significance: 'Archangel, divine protection and leadership'
+  },
+  'רפאל': {
+    meaning: 'God Heals',
+    etymology: 'From רפא (to heal) + אל (God)',
+    significance: 'Archangel of healing and divine restoration'
+  },
+  'אוריאל': {
+    meaning: 'Light of God',
+    etymology: 'From אור (light) + אל (God)',
+    significance: 'Archangel of divine illumination'
   }
 };
 
