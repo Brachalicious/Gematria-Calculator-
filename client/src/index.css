@@ -4,52 +4,52 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --background: 246 241 231; /* #f6f1e7 */
+    --foreground: 270 100% 25%; /* #4b0082 */
+    --card: 60 100% 99%; /* #fffdf8 */
+    --card-foreground: 270 100% 25%;
+    --popover: 60 100% 99%;
+    --popover-foreground: 270 100% 25%;
+    --primary: 270 100% 25%; /* #4b0082 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 78% 60%; /* #d4af37 */
+    --secondary-foreground: 270 100% 25%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 45 78% 60%; /* #d4af37 */
+    --accent-foreground: 270 100% 25%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --border: 45 78% 60%; /* #d4af37 */
+    --input: 45 78% 60%;
+    --ring: 270 100% 25%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
   .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --background: 246 241 231;
+    --foreground: 270 100% 25%;
+    --card: 60 100% 99%;
+    --card-foreground: 270 100% 25%;
+    --popover: 60 100% 99%;
+    --popover-foreground: 270 100% 25%;
+    --primary: 270 100% 25%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 78% 60%;
+    --secondary-foreground: 270 100% 25%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 45 78% 60%;
+    --accent-foreground: 270 100% 25%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 45 78% 60%;
+    --input: 45 78% 60%;
+    --ring: 270 100% 25%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -57,11 +57,86 @@
     --chart-5: 340 75% 55%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
+    font-family: 'Georgia', serif;
     @apply bg-background text-foreground;
+    direction: rtl;
+    padding: 40px;
+  }
+  h1 {
+    text-shadow: 1px 1px hsl(var(--accent));
+  }
+  h2, h3 {
+    color: hsl(var(--primary));
+  }
+}
+
+@layer components {
+  .gematria-container {
+    max-width: 800px;
+    margin: auto;
+    background: hsl(var(--card));
+    border: 4px solid hsl(var(--border));
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .gematria-logo {
+    display: block;
+    max-width: 180px;
+    margin: 0 auto 20px auto;
+  }
+  
+  .gematria-input {
+    border: 2px solid hsl(var(--border)) !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    padding: 12px !important;
+  }
+  
+  .gematria-button {
+    background-color: hsl(var(--primary)) !important;
+    color: white !important;
+    padding: 12px 20px !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+    transition: background 0.3s, transform 0.2s !important;
+  }
+  
+  .gematria-button:hover {
+    background-color: #6a0dad !important;
+    transform: scale(1.05) !important;
+  }
+  
+  .gematria-output {
+    margin-top: 25px;
+    padding: 20px;
+    background: white;
+    border-left: 5px solid hsl(var(--accent));
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    line-height: 1.6;
+  }
+  
+  .gematria-card {
+    background: hsl(var(--card)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  }
+  
+  .gematria-result-card {
+    background: white !important;
+    border-left: 5px solid hsl(var(--accent)) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
   }
 }
