@@ -200,6 +200,11 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From ציפור (bird)',
     significance: 'Wife of Moses, represents freedom and spiritual flight'
   },
+  'צִפּוֹרָה': {
+    meaning: 'Bird',
+    etymology: 'From ציפור (bird)',
+    significance: 'Wife of Moses, represents freedom and spiritual flight'
+  },
   'זיפו': {
     meaning: 'Bird',
     etymology: 'From ציפור (bird), shortened form',
@@ -389,14 +394,24 @@ const HEBREW_NAME_MEANINGS = {
   }
 };
 
+function cleanHebrewText(text: string): string {
+  // Remove Hebrew vowel points (niqqud) and keep only consonants
+  return text.replace(/[\u0591-\u05C7]/g, '');
+}
+
 export function NameMeaning({ text }: NameMeaningProps) {
   const cleanText = text.replace(/[^\u0590-\u05FF]/g, '').trim();
+  const cleanedForLookup = cleanHebrewText(cleanText);
   
   if (cleanText.length === 0) {
     return null;
   }
 
-  const nameData = HEBREW_NAME_MEANINGS[cleanText as keyof typeof HEBREW_NAME_MEANINGS];
+  // First try with the original text, then with cleaned text (no vowel points)
+  let nameData = HEBREW_NAME_MEANINGS[cleanText as keyof typeof HEBREW_NAME_MEANINGS];
+  if (!nameData) {
+    nameData = HEBREW_NAME_MEANINGS[cleanedForLookup as keyof typeof HEBREW_NAME_MEANINGS];
+  }
 
   if (!nameData) {
     return (
