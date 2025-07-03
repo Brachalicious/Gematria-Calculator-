@@ -649,11 +649,6 @@ const HEBREW_NAME_MEANINGS = {
   },
 
   // Modern Hebrew Names
-  'אריאל': {
-    meaning: 'Lion of God',
-    etymology: 'From אריה (lion) + אל (God)',
-    significance: 'Divine strength and courage'
-  },
   'גבריאל': {
     meaning: 'Strength of God',
     etymology: 'From גבר (strength) + אל (God)',
