@@ -211,6 +211,288 @@ const HEBREW_NAME_MEANINGS = {
     significance: 'Represents freedom, grace, and spiritual elevation'
   },
 
+  // Additional Biblical Names
+  'אבא': {
+    meaning: 'Father',
+    etymology: 'From אב (father)',
+    significance: 'Intimate term for father'
+  },
+  'אבי': {
+    meaning: 'My Father',
+    etymology: 'From אב (father) + י (my)',
+    significance: 'Personal connection to paternal guidance'
+  },
+  'אביאסף': {
+    meaning: 'My Father has Gathered',
+    etymology: 'From אבי (my father) + אסף (gathered)',
+    significance: 'Divine gathering and collection'
+  },
+  'אביתר': {
+    meaning: 'Father of Excellence',
+    etymology: 'From אב (father) + יתר (excellence)',
+    significance: 'Priestly lineage and spiritual excellence'
+  },
+  'אבידן': {
+    meaning: 'My Father has Judged',
+    etymology: 'From אבי (my father) + דן (judged)',
+    significance: 'Divine judgment and justice'
+  },
+  'אביאל': {
+    meaning: 'My Father is God',
+    etymology: 'From אבי (my father) + אל (God)',
+    significance: 'Recognition of divine paternity'
+  },
+  'אביעזר': {
+    meaning: 'My Father is Help',
+    etymology: 'From אבי (my father) + עזר (help)',
+    significance: 'Divine assistance and support'
+  },
+  'אביגיל': {
+    meaning: 'My Father is Joy',
+    etymology: 'From אבי (my father) + גיל (joy)',
+    significance: 'Divine joy and celebration'
+  },
+  'עדן': {
+    meaning: 'Pleasure',
+    etymology: 'From עדן (pleasure, delight)',
+    significance: 'Paradise and divine pleasure'
+  },
+  'עדנה': {
+    meaning: 'Pleasure / Beautiful',
+    etymology: 'From עדן (pleasure)',
+    significance: 'Divine delight and beauty'
+  },
+  'אהוד': {
+    meaning: 'Unity / Praised',
+    etymology: 'From אחד (one) or הוד (praise)',
+    significance: 'Divine unity and praise'
+  },
+  'איתן': {
+    meaning: 'Strong / Steadfast',
+    etymology: 'From איתן (strong, firm)',
+    significance: 'Spiritual strength and reliability'
+  },
+  'עקיבא': {
+    meaning: 'To Follow',
+    etymology: 'From עקב (heel, to follow)',
+    significance: 'Great sage, spiritual following'
+  },
+  'עליזה': {
+    meaning: 'Joyful',
+    etymology: 'From עלז (to rejoice)',
+    significance: 'Divine joy and celebration'
+  },
+  'אלון': {
+    meaning: 'Oak Tree',
+    etymology: 'From אלון (oak)',
+    significance: 'Strength and endurance'
+  },
+  'אלוף': {
+    meaning: 'Champion',
+    etymology: 'From אלף (champion, leader)',
+    significance: 'Leadership and strength'
+  },
+  'אמציה': {
+    meaning: 'Strength of God',
+    etymology: 'From אמץ (strength) + יה (God)',
+    significance: 'Divine empowerment'
+  },
+  'עמי': {
+    meaning: 'My People',
+    etymology: 'From עם (people) + י (my)',
+    significance: 'Connection to the Jewish nation'
+  },
+  'עמיעד': {
+    meaning: 'My People Forever',
+    etymology: 'From עמי (my people) + עד (forever)',
+    significance: 'Eternal connection to the Jewish people'
+  },
+  'עמיחי': {
+    meaning: 'My People Live',
+    etymology: 'From עמי (my people) + חי (alive)',
+    significance: 'The vitality and survival of the Jewish people'
+  },
+  'עמיקם': {
+    meaning: 'My People Rise',
+    etymology: 'From עמי (my people) + קם (rise)',
+    significance: 'The resurrection and renewal of Israel'
+  },
+  'אמיר': {
+    meaning: 'Treetop',
+    etymology: 'From אמיר (treetop)',
+    significance: 'Height and spiritual elevation'
+  },
+  'עמיר': {
+    meaning: 'Sheaf',
+    etymology: 'From עמיר (sheaf of grain)',
+    significance: 'Harvest and abundance'
+  },
+  'אמירה': {
+    meaning: 'Saying / Speech',
+    etymology: 'From אמר (to say)',
+    significance: 'Divine speech and communication'
+  },
+  'עמירה': {
+    meaning: 'Sheaf Binding',
+    etymology: 'From עמיר (sheaf)',
+    significance: 'Gathering and unity'
+  },
+  'עמירם': {
+    meaning: 'My People are Exalted',
+    etymology: 'From עמי (my people) + רם (high)',
+    significance: 'The elevation of the Jewish people'
+  },
+  'עמירן': {
+    meaning: 'My People Sing',
+    etymology: 'From עמי (my people) + רן (sing)',
+    significance: 'Joy and celebration of the nation'
+  },
+  'עמית': {
+    meaning: 'Friend / Colleague',
+    etymology: 'From עמית (friend)',
+    significance: 'Companionship and fellowship'
+  },
+  'אמתי': {
+    meaning: 'Truthful',
+    etymology: 'From אמת (truth)',
+    significance: 'Divine truth and honesty'
+  },
+  'עמיה': {
+    meaning: 'My People of God',
+    etymology: 'From עמי (my people) + יה (God)',
+    significance: 'The chosen people of God'
+  },
+  'עמיצור': {
+    meaning: 'My People are a Rock',
+    etymology: 'From עמי (my people) + צור (rock)',
+    significance: 'The strength and stability of Israel'
+  },
+  'עמיאל': {
+    meaning: 'My People of God',
+    etymology: 'From עמי (my people) + אל (God)',
+    significance: 'The divine nature of the Jewish people'
+  },
+  'עמינדב': {
+    meaning: 'My People are Noble',
+    etymology: 'From עמי (my people) + נדב (noble)',
+    significance: 'The nobility of Israel'
+  },
+  'אמנון': {
+    meaning: 'Faithful',
+    etymology: 'From אמן (faith)',
+    significance: 'Faithfulness and reliability'
+  },
+  'עמוס': {
+    meaning: 'Burdened',
+    etymology: 'From עמס (to bear a load)',
+    significance: 'Prophet who bore God\'s message'
+  },
+  'אמוץ': {
+    meaning: 'Strong',
+    etymology: 'From אמץ (strength)',
+    significance: 'Divine strength and courage'
+  },
+  'עמרם': {
+    meaning: 'Exalted People',
+    etymology: 'From עם (people) + רם (high)',
+    significance: 'Father of Moses, spiritual elevation'
+  },
+  'אנאל': {
+    meaning: 'Please God',
+    etymology: 'From אנא (please) + אל (God)',
+    significance: 'Supplication and prayer'
+  },
+  'ענת': {
+    meaning: 'Response',
+    etymology: 'From ענה (to answer)',
+    significance: 'Divine response and communication'
+  },
+  'ענר': {
+    meaning: 'Sharp / Alert',
+    etymology: 'From ענר (alert)',
+    significance: 'Spiritual alertness and awareness'
+  },
+  'ארם': {
+    meaning: 'High / Exalted',
+    etymology: 'From רום (height)',
+    significance: 'Ancient region, spiritual elevation'
+  },
+  'ערבה': {
+    meaning: 'Desert / Willow',
+    etymology: 'From ערב (desert)',
+    significance: 'Spiritual journey through wilderness'
+  },
+  'ארבל': {
+    meaning: 'God\'s Ambush',
+    etymology: 'From ארב (ambush) + אל (God)',
+    significance: 'Mountain in Galilee, divine protection'
+  },
+  'ארי': {
+    meaning: 'Lion',
+    etymology: 'From ארי (lion)',
+    significance: 'Strength and courage'
+  },
+  'אריאל': {
+    meaning: 'Lion of God',
+    etymology: 'From ארי (lion) + אל (God)',
+    significance: 'Divine strength and courage'
+  },
+  'אריאלה': {
+    meaning: 'Lion of God',
+    etymology: 'From ארי (lion) + אל (God)',
+    significance: 'Divine strength and courage'
+  },
+  'ארנון': {
+    meaning: 'Roaring Stream',
+    etymology: 'From ארן (roar)',
+    significance: 'River in the Bible, divine power'
+  },
+  'ארנונה': {
+    meaning: 'Roaring Stream',
+    etymology: 'From ארן (roar)',
+    significance: 'Divine power and strength'
+  },
+  'אריה': {
+    meaning: 'Lion',
+    etymology: 'From אריה (lion)',
+    significance: 'Strength and royal power'
+  },
+  'אסא': {
+    meaning: 'Healer',
+    etymology: 'From אסא (to heal)',
+    significance: 'King of Judah, divine healing'
+  },
+  'עשהאל': {
+    meaning: 'God has Made',
+    etymology: 'From עשה (made) + אל (God)',
+    significance: 'Divine creation and purpose'
+  },
+  'אסף': {
+    meaning: 'Gatherer',
+    etymology: 'From אסף (to gather)',
+    significance: 'Levite musician, spiritual gathering'
+  },
+  'אסנת': {
+    meaning: 'Belonging to Neith',
+    etymology: 'Egyptian origin',
+    significance: 'Wife of Joseph, integration of nations'
+  },
+  'עטרה': {
+    meaning: 'Crown',
+    etymology: 'From עטר (to crown)',
+    significance: 'Royal dignity and honor'
+  },
+  'עטרת': {
+    meaning: 'Crown',
+    etymology: 'From עטר (to crown)',
+    significance: 'Divine majesty and glory'
+  },
+  'עתליה': {
+    meaning: 'God has Shown',
+    etymology: 'From עת (time) + אל (God)',
+    significance: 'Divine revelation and timing'
+  },
+
   // Divine Attributes and Spiritual Concepts
   'אמונה': {
     meaning: 'Faith',
@@ -391,6 +673,73 @@ const HEBREW_NAME_MEANINGS = {
     meaning: 'Light of God',
     etymology: 'From אור (light) + אל (God)',
     significance: 'Archangel of divine illumination'
+  },
+
+  // Nature Names
+  'דפנה': {
+    meaning: 'Laurel',
+    etymology: 'From דפנה (laurel tree)',
+    significance: 'Victory and honor'
+  },
+  'דלית': {
+    meaning: 'Vine Branch',
+    etymology: 'From דלה (to draw up)',
+    significance: 'Spiritual growth and elevation'
+  },
+  'דליה': {
+    meaning: 'Branch / Dahlia',
+    etymology: 'From דלה (branch)',
+    significance: 'Beauty and growth'
+  },
+  'דנה': {
+    meaning: 'She Judges',
+    etymology: 'From דין (to judge)',
+    significance: 'Justice and discernment'
+  },
+  'דניאלה': {
+    meaning: 'God is My Judge',
+    etymology: 'From דן (judge) + אל (God)',
+    significance: 'Divine justice and wisdom'
+  },
+  'דנית': {
+    meaning: 'Judge',
+    etymology: 'From דין (to judge)',
+    significance: 'Justice and righteousness'
+  },
+  'דני': {
+    meaning: 'My Judge',
+    etymology: 'From דן (judge)',
+    significance: 'Divine judgment and guidance'
+  },
+  'דתיה': {
+    meaning: 'Religion of God',
+    etymology: 'From דת (religion) + יה (God)',
+    significance: 'Divine law and faith'
+  },
+  'דויד': {
+    meaning: 'Beloved',
+    etymology: 'From דוד (beloved)',
+    significance: 'King of Israel, divine love'
+  },
+  'דוידה': {
+    meaning: 'Beloved',
+    etymology: 'From דוד (beloved)',
+    significance: 'Divine love and affection'
+  },
+  'דביר': {
+    meaning: 'Holy of Holies',
+    etymology: 'From דבר (word, speak)',
+    significance: 'Sacred space in the Temple'
+  },
+  'דבורה': {
+    meaning: 'Bee',
+    etymology: 'From דבור (speech) or דבורה (bee)',
+    significance: 'Prophetess, industriousness and wisdom'
+  },
+  'דקל': {
+    meaning: 'Palm Tree',
+    etymology: 'From דקל (palm)',
+    significance: 'Righteousness and uprightness'
   }
 };
 
