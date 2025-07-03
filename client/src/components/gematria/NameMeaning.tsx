@@ -200,6 +200,11 @@ const HEBREW_NAME_MEANINGS = {
     etymology: 'From ציפור (bird)',
     significance: 'Wife of Moses, represents freedom and spiritual flight'
   },
+  'זיפו': {
+    meaning: 'Bird',
+    etymology: 'From ציפור (bird), shortened form',
+    significance: 'Represents freedom, grace, and spiritual elevation'
+  },
 
   // Divine Attributes and Spiritual Concepts
   'אמונה': {
