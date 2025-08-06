@@ -82,19 +82,25 @@ export function HebrewKeyboard({ isOpen, onClose, onKeyPress, onBackspace, onCle
           <div className="flex gap-2 justify-center pt-3 border-t border-purple-400">
             <Button
               onClick={onBackspace}
-              className="px-3 py-2 text-sm sm:text-base bg-red-600 hover:bg-red-700 text-white border-2 border-red-400"
+              className="px-3 py-2 text-sm sm:text-base bg-gradient-to-br from-yellow-400 to-yellow-600 
+                         hover:from-yellow-500 hover:to-yellow-700 text-purple-900 border-2 border-yellow-500
+                         transition-all duration-200 hover:scale-105 font-bold"
             >
               ← Backspace
             </Button>
             <Button
               onClick={onClear}
-              className="px-3 py-2 text-sm sm:text-base bg-orange-600 hover:bg-orange-700 text-white border-2 border-orange-400"
+              className="px-3 py-2 text-sm sm:text-base bg-gradient-to-br from-yellow-400 to-yellow-600 
+                         hover:from-yellow-500 hover:to-yellow-700 text-purple-900 border-2 border-yellow-500
+                         transition-all duration-200 hover:scale-105 font-bold"
             >
               🗑️ Clear
             </Button>
             <Button
               onClick={onClose}
-              className="px-3 py-2 text-sm sm:text-base bg-gray-600 hover:bg-gray-700 text-white border-2 border-gray-400"
+              className="px-3 py-2 text-sm sm:text-base bg-gradient-to-br from-yellow-400 to-yellow-600 
+                         hover:from-yellow-500 hover:to-yellow-700 text-purple-900 border-2 border-yellow-500
+                         transition-all duration-200 hover:scale-105 font-bold"
             >
               ✓ Done
             </Button>
