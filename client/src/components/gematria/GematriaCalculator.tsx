@@ -102,7 +102,7 @@ export function GematriaCalculator() {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">Calculate Gematria and Meaning of Your Name</h1>
         <p className="text-sm sm:text-base text-purple-600 px-2">Discover the spiritual significance and numerical value of your name</p>
         <p className="text-xs sm:text-sm text-yellow-600 mt-2 font-semibold px-2">
-          ✨ (Now with Hebrew keyboard support! Enter up to 5 names for individual and combined calculations.)
+          (Now with Hebrew keyboard support! Enter up to 5 names for individual and combined calculations.)
         </p>
         
         <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
