@@ -89,9 +89,9 @@ export function GematriaCalculator() {
     calculateGematria(activeNames.join(' '), method) : null;
 
   return (
-    <div className="gematria-container" style={{ paddingTop: '48px' }}>
+    <div className="gematria-container">
       {/* Auth bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '6px 16px', background: 'rgba(255,255,255,0.95)', borderBottom: '1px solid rgba(201,168,76,0.3)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', padding: '6px 0' }}>
         {user ? (
           <>
             <div style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }} />
