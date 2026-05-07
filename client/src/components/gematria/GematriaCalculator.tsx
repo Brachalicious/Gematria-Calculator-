@@ -94,7 +94,7 @@ export function GematriaCalculator() {
               className="gematria-logo"
               onError={handleLogoError}
               onClick={() => setChatOpen(true)}
-              style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 8px auto', width: '160px', height: '160px', objectFit: 'contain' }}
+              style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 8px auto', width: '200px', height: '200px', objectFit: 'contain' }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.08)';
                 (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 12px #c9a84c)';
@@ -109,7 +109,7 @@ export function GematriaCalculator() {
               gap: '6px', marginBottom: '12px', animation: 'pulse 1.5s infinite',
             }}>
               <span style={{ fontSize: '22px' }}>👆</span>
-              <span style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }}>Click to discuss with MysticMinded33!</span>
+              <span style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }}>Click to discuss with MysticMinded³³ bot</span>
             </div>
             <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
           </>
