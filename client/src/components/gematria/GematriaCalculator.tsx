@@ -91,23 +91,28 @@ export function GematriaCalculator() {
   return (
     <div className="gematria-container">
       {/* Auth bar */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         {user ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '12px', color: '#a07cc5' }}>👤 {user.email}</span>
-            <button onClick={logout} style={{
-              padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(201,168,76,0.4)',
-              background: 'none', color: '#c9a84c', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold',
-            }}>Log Out</button>
-          </div>
+          <>
+            <div style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '12px', color: '#a07cc5' }}>👤 {user.email}</span>
+              <button onClick={logout} style={{
+                padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(201,168,76,0.4)',
+                background: 'none', color: '#c9a84c', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold',
+              }}>Log Out</button>
+            </div>
+          </>
         ) : (
           <>
-          <button onClick={() => setAuthOpen(true)} style={{
-            padding: '6px 16px', borderRadius: '20px', border: 'none',
-            background: 'linear-gradient(135deg, #c9a84c, #a07020)',
-            color: '#1a0a2e', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold',
-          }}>🔐 Login / Create Account</button>
-          <div style={{ fontSize: '11px', color: '#a07cc5', marginTop: '5px', textAlign: 'right' }}>Create an account if you wish to save Gematria charts</div>
+            <div style={{ fontSize: '13px', color: '#2d0a5a', fontWeight: 'bold' }}>
+              ✨ Create an account if you wish to save Gematria charts
+            </div>
+            <button onClick={() => setAuthOpen(true)} style={{
+              padding: '6px 16px', borderRadius: '20px', border: 'none',
+              background: 'linear-gradient(135deg, #c9a84c, #a07020)',
+              color: '#1a0a2e', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold', whiteSpace: 'nowrap',
+            }}>🔐 Login / Create Account</button>
           </>
         )}
       </div>
