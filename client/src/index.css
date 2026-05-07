@@ -131,20 +131,20 @@
   
   .gematria-logo {
     display: block;
-    max-width: 120px;
+    max-width: 260px;
     margin: 0 auto 16px auto;
   }
 
   @media (min-width: 640px) {
     .gematria-logo {
-      max-width: 150px;
+      max-width: 300px;
       margin: 0 auto 18px auto;
     }
   }
 
   @media (min-width: 1024px) {
     .gematria-logo {
-      max-width: 180px;
+      max-width: 340px;
       margin: 0 auto 20px auto;
     }
   }
@@ -677,7 +677,7 @@
     }
     
     .gematria-logo {
-      max-width: 150px;
+      max-width: 300px;
     }
     
     h1 {

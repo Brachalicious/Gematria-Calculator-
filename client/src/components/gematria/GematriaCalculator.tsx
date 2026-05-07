@@ -18,11 +18,13 @@ import { EnhancedNameMeaning } from './EnhancedNameMeaning';
 import { BiblicalNotes } from './BiblicalNotes';
 import { MeaningfulNotes } from './MeaningfulNotes';
 import { TikkunOlam } from './TikkunOlam';
+import { ChatBot } from './ChatBot';
 
 export function GematriaCalculator() {
   const [names, setNames] = React.useState<string[]>(['', '', '', '', '']);
   const [method, setMethod] = React.useState('standard');
   const [logoError, setLogoError] = React.useState(false);
+  const [chatOpen, setChatOpen] = React.useState(false);
   const [showFullList, setShowFullList] = React.useState(false);
   const [keyboardOpen, setKeyboardOpen] = React.useState(false);
   const [activeInput, setActiveInput] = React.useState<number>(0);
@@ -71,24 +73,34 @@ export function GematriaCalculator() {
 
   const getActiveNames = () => names.filter(name => name.trim() !== '');
   const activeNames = getActiveNames();
-  
+
   const nameResults = activeNames.map(name => ({
     name,
     result: calculateGematria(name, method)
   }));
 
-  const combinedResult = activeNames.length > 1 ? 
+  const combinedResult = activeNames.length > 1 ?
     calculateGematria(activeNames.join(' '), method) : null;
 
   return (
     <div className="gematria-container">
       <div className="text-center mb-6">
         {!logoError ? (
-          <img 
-            src="/mysticminded-logo.png" 
-            alt="Mystic Minded Logo" 
+          <img
+            src="/mysticminded-logo.svg"
+            alt="Mystic Minded Logo"
             className="gematria-logo"
             onError={handleLogoError}
+            onClick={() => setChatOpen(true)}
+            style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 16px auto' }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.08)';
+              (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 12px #c9a84c)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+              (e.currentTarget as HTMLImageElement).style.filter = 'none';
+            }}
           />
         ) : (
           <div className="gematria-logo flex items-center justify-center bg-primary/10 border-2 border-dashed border-primary/30 rounded-lg">
@@ -101,18 +113,17 @@ export function GematriaCalculator() {
         )}
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">Calculate Gematria and Meaning of Your Name</h1>
         <p className="text-sm sm:text-base text-primary px-2">Discover the spiritual significance and numerical value of your name</p>
-        {/* Force refresh 2025-08-06 */}
-        
+
         <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
-          <Button 
+          <Button
             onClick={toggleFullList}
             variant={showFullList ? "secondary" : "outline"}
             className="gematria-button w-full sm:w-auto"
           >
             {showFullList ? "Hide Names Database" : "View All Hebrew Names"}
           </Button>
-          
-          <Button 
+
+          <Button
             onClick={() => {
               const sampleNames = ['דוד', 'שרה', 'אברהם', 'רחל', 'משה'];
               const newNames = [...names];
@@ -171,7 +182,7 @@ export function GematriaCalculator() {
                   </div>
                 </div>
               ))}
-              
+
               <div className="space-y-2">
                 <Label htmlFor="method" className="font-bold text-lg">Calculation Method</Label>
                 <Select value={method} onValueChange={handleMethodChange}>
@@ -186,7 +197,7 @@ export function GematriaCalculator() {
                   </SelectContent>
                 </Select>
               </div>
-              
+
               {activeNames.length > 0 && (
                 <div className="text-center mt-4">
                   <Button
@@ -212,8 +223,8 @@ export function GematriaCalculator() {
                 ))}
               </div>
               <p className="text-sm text-purple-700 font-semibold">
-                {activeNames.length === 1 ? 
-                  'Analyzing one Hebrew name' : 
+                {activeNames.length === 1 ?
+                  'Analyzing one Hebrew name' :
                   `Analyzing ${activeNames.length} Hebrew names individually and combined`
                 }
               </p>
@@ -286,6 +297,8 @@ export function GematriaCalculator() {
           />
         </>
       )}
+
+      <ChatBot isOpen={chatOpen} onClose={() => setChatOpen(false)} />
     </div>
   );
 }
