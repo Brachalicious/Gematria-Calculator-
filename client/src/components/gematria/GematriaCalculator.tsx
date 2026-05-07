@@ -19,6 +19,8 @@ import { BiblicalNotes } from './BiblicalNotes';
 import { MeaningfulNotes } from './MeaningfulNotes';
 import { TikkunOlam } from './TikkunOlam';
 import { ChatBot } from './ChatBot';
+import { AuthModal } from './AuthModal';
+import { useAuth } from '@/hooks/useAuth';
 import { ShareResults } from './ShareResults';
 import { SaveChart } from './SaveChart';
 
@@ -27,6 +29,8 @@ export function GematriaCalculator() {
   const [method, setMethod] = React.useState('standard');
   const [logoError, setLogoError] = React.useState(false);
   const [chatOpen, setChatOpen] = React.useState(false);
+  const [authOpen, setAuthOpen] = React.useState(false);
+  const { user, logout } = useAuth();
   const [showFullList, setShowFullList] = React.useState(false);
   const [keyboardOpen, setKeyboardOpen] = React.useState(false);
   const [activeInput, setActiveInput] = React.useState<number>(0);
@@ -86,6 +90,24 @@ export function GematriaCalculator() {
 
   return (
     <div className="gematria-container">
+      {/* Auth bar */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+        {user ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '12px', color: '#a07cc5' }}>👤 {user.email}</span>
+            <button onClick={logout} style={{
+              padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(201,168,76,0.4)',
+              background: 'none', color: '#c9a84c', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold',
+            }}>Log Out</button>
+          </div>
+        ) : (
+          <button onClick={() => setAuthOpen(true)} style={{
+            padding: '6px 16px', borderRadius: '20px', border: 'none',
+            background: 'linear-gradient(135deg, #c9a84c, #a07020)',
+            color: '#1a0a2e', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold',
+          }}>🔐 Login / Create Account</button>
+        )}
+      </div>
       <div className="text-center mb-6">
         {!logoError ? (
           <>
@@ -315,6 +337,7 @@ export function GematriaCalculator() {
       )}
 
       <ChatBot isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
     </div>
   );
 }
