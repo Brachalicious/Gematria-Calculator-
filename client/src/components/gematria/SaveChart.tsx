@@ -15,6 +15,7 @@ export function SaveChart({ name, total, method, letters }: SaveChartProps) {
   const { user } = useAuth();
   const [saved, setSaved] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
+  const [chartName, setChartName] = React.useState('');
   const [showAuth, setShowAuth] = React.useState(false);
   const [error, setError] = React.useState('');
 
@@ -36,6 +37,7 @@ export function SaveChart({ name, total, method, letters }: SaveChartProps) {
       await addDoc(collection(db, 'savedCharts'), {
         uid: user.uid,
         email: user.email,
+        chartName: chartName.trim() || name,
         name,
         total,
         method: methodLabel(method),
@@ -139,6 +141,26 @@ export function SaveChart({ name, total, method, letters }: SaveChartProps) {
         <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', fontSize: '13px', color: '#4b0082' }}>
           💾 Save your chart:
         </p>
+        {user && (
+          <div style={{ marginBottom: '10px' }}>
+            <input
+              type="text"
+              value={chartName}
+              onChange={e => setChartName(e.target.value)}
+              placeholder={`Name this chart (e.g. "${name} reading")`}
+              style={{
+                width: '100%', padding: '8px 12px', borderRadius: '8px',
+                border: '1px solid rgba(201,168,76,0.4)',
+                background: 'rgba(255,255,255,0.07)',
+                color: '#4b0082', fontSize: '13px', outline: 'none',
+                boxSizing: 'border-box' as any,
+              }}
+            />
+            <div style={{ fontSize: '11px', color: '#a07cc5', marginTop: '4px' }}>
+              Give your chart a name for easy searching later
+            </div>
+          </div>
+        )}
 
         {!user && (
           <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#7c3aed' }}>
