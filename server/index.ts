@@ -19,8 +19,23 @@ try {
   console.warn('Could not load Bahir:', e);
 }
 
+// Load Sefer Yetzirah wisdom
+let yetzirahPassages: string[] = [];
+try {
+  const yetzirahData = JSON.parse(readFileSync(join(__dirname, 'yetzirah.json'), 'utf-8'));
+  const flatText = (yetzirahData.text as any[]).flat(Infinity).filter((t: string) => t && t.trim().length > 20);
+  yetzirahPassages = flatText;
+  console.log(`Loaded ${yetzirahPassages.length} passages from Sefer Yetzirah`);
+} catch (e) {
+  console.warn('Could not load Yetzirah:', e);
+}
+
 const bahirContext = bahirPassages.length > 0
   ? `\n\nYou also have access to passages from Sefer HaBahir (an ancient Kabbalistic text). Use this wisdom to enrich your answers when relevant:\n\n${bahirPassages.slice(0, 5).join('\n\n')}`
+  : '';
+
+const yetzirahContext = yetzirahPassages.length > 0
+  ? `\n\nYou also have access to passages from Sefer Yetzirah (The Book of Creation, Aryeh Kaplan translation). Draw on this foundational Kabbalistic text about the 32 paths of wisdom, the Hebrew letters, and the Sefirot when relevant:\n\n${yetzirahPassages.slice(0, 8).join('\n\n')}`
   : '';
 
 const app = express();
@@ -47,7 +62,7 @@ app.post('/api/chat', async (req: express.Request, res: express.Response) => {
         messages: [
           {
             role: 'system',
-            content: `You are MysticMind, a mystical and spiritual AI assistant specializing in Gematria, Kabbalah, Hebrew numerology, and Jewish mysticism. Be wise, warm, and insightful. Draw on the teachings of Sefer HaBahir and Kabbalistic tradition when relevant.${bahirContext}`,
+            content: `You are MysticMind, a mystical and spiritual AI assistant specializing in Gematria, Kabbalah, Hebrew numerology, and Jewish mysticism. Be wise, warm, and insightful. Draw on the teachings of Sefer HaBahir, Sefer Yetzirah, and Kabbalistic tradition when relevant.${bahirContext}${yetzirahContext}`,
           },
           ...messages,
         ],
