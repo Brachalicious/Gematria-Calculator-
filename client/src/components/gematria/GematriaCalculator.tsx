@@ -87,30 +87,32 @@ export function GematriaCalculator() {
     <div className="gematria-container">
       <div className="text-center mb-6">
         {!logoError ? (
-          <img
-            src="/mysticminded-logo.svg"
-            alt="Mystic Minded Logo"
-            className="gematria-logo"
-            onError={handleLogoError}
-            onClick={() => setChatOpen(true)}
-            style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 16px auto' }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.08)';
-              (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 12px #c9a84c)';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
-              (e.currentTarget as HTMLImageElement).style.filter = 'none';
-            }}
-          />
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            gap: '6px', marginTop: '6px', animation: 'pulse 1.5s infinite',
-          }}>
-            <span style={{ fontSize: '22px' }}>👆</span>
-            <span style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }}>Click to discuss with MysticMind!</span>
-          </div>
-          <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
+          <>
+            <img
+              src="/mysticminded-logo.svg"
+              alt="Mystic Minded Logo"
+              className="gematria-logo"
+              onError={handleLogoError}
+              onClick={() => setChatOpen(true)}
+              style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 8px auto' }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.08)';
+                (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 12px #c9a84c)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+                (e.currentTarget as HTMLImageElement).style.filter = 'none';
+              }}
+            />
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              gap: '6px', marginBottom: '12px', animation: 'pulse 1.5s infinite',
+            }}>
+              <span style={{ fontSize: '22px' }}>👆</span>
+              <span style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }}>Click to discuss with MysticMinded33!</span>
+            </div>
+            <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
+          </>
         ) : (
           <div className="gematria-logo flex items-center justify-center bg-primary/10 border-2 border-dashed border-primary/30 rounded-lg">
             <div className="text-center p-4">
