@@ -1,11 +1,29 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { setupStaticServing } from './static-serve.js';
 
 dotenv.config();
 
-const app = express();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
+// Load Sefer HaBahir wisdom
+let bahirPassages: string[] = [];
+try {
+  const bahirData = JSON.parse(readFileSync(join(__dirname, 'bahir.json'), 'utf-8'));
+  bahirPassages = (bahirData.text as string[]).filter((t: string) => t && t.trim().length > 20);
+  console.log(`Loaded ${bahirPassages.length} passages from Sefer HaBahir`);
+} catch (e) {
+  console.warn('Could not load Bahir:', e);
+}
+
+const bahirContext = bahirPassages.length > 0
+  ? `\n\nYou also have access to passages from Sefer HaBahir (an ancient Kabbalistic text). Use this wisdom to enrich your answers when relevant:\n\n${bahirPassages.slice(0, 5).join('\n\n')}`
+  : '';
+
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,7 +47,7 @@ app.post('/api/chat', async (req: express.Request, res: express.Response) => {
         messages: [
           {
             role: 'system',
-            content: 'You are MysticMind, a mystical and spiritual AI assistant specializing in Gematria, Kabbalah, Hebrew numerology, and Jewish mysticism. Be wise, warm, and insightful.',
+            content: `You are MysticMind, a mystical and spiritual AI assistant specializing in Gematria, Kabbalah, Hebrew numerology, and Jewish mysticism. Be wise, warm, and insightful. Draw on the teachings of Sefer HaBahir and Kabbalistic tradition when relevant.${bahirContext}`,
           },
           ...messages,
         ],

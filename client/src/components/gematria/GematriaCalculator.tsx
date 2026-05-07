@@ -20,6 +20,7 @@ import { MeaningfulNotes } from './MeaningfulNotes';
 import { TikkunOlam } from './TikkunOlam';
 import { ChatBot } from './ChatBot';
 import { ShareResults } from './ShareResults';
+import { SaveChart } from './SaveChart';
 
 export function GematriaCalculator() {
   const [names, setNames] = React.useState<string[]>(['', '', '', '', '']);
@@ -260,6 +261,7 @@ export function GematriaCalculator() {
                 <BiblicalMatches gematriaValue={nameResult.result.total} />
                 <KabbalisticInterpretation letters={nameResult.result.letters} />
                 <ShareResults name={nameResult.name} total={nameResult.result.total} method={method} />
+                <SaveChart name={nameResult.name} total={nameResult.result.total} method={method} letters={nameResult.result.letters} />
               </div>
             </div>
           ))}
@@ -287,6 +289,7 @@ export function GematriaCalculator() {
                 <BiblicalMatches gematriaValue={combinedResult.total} />
                 <KabbalisticInterpretation letters={combinedResult.letters} />
                 <ShareResults name={activeNames.join(' ')} total={combinedResult.total} method={method} />
+                <SaveChart name={activeNames.join(' ')} total={combinedResult.total} method={method} letters={combinedResult.letters} />
               </div>
             </div>
           )}
