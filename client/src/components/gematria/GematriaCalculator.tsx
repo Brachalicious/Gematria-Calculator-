@@ -94,7 +94,7 @@ export function GematriaCalculator() {
               className="gematria-logo"
               onError={handleLogoError}
               onClick={() => setChatOpen(true)}
-              style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 8px auto', width: '200px', height: '200px', objectFit: 'contain' }}
+              style={{ cursor: 'pointer', transition: 'transform 0.2s, filter 0.2s', display: 'block', margin: '0 auto 8px auto', height: '180px', width: 'auto', maxWidth: '280px' }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.08)';
                 (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 12px #c9a84c)';
