@@ -106,6 +106,7 @@ export function GematriaCalculator() {
             background: 'linear-gradient(135deg, #c9a84c, #a07020)',
             color: '#1a0a2e', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold',
           }}>🔐 Login / Create Account</button>
+          <div style={{ fontSize: '11px', color: '#a07cc5', marginTop: '5px', textAlign: 'right' }}>Create an account if you wish to save Gematria charts</div>
         )}
       </div>
       <div className="text-center mb-6">
