@@ -19,6 +19,7 @@ import { BiblicalNotes } from './BiblicalNotes';
 import { MeaningfulNotes } from './MeaningfulNotes';
 import { TikkunOlam } from './TikkunOlam';
 import { ChatBot } from './ChatBot';
+import { ShareResults } from './ShareResults';
 
 export function GematriaCalculator() {
   const [names, setNames] = React.useState<string[]>(['', '', '', '', '']);
@@ -102,6 +103,14 @@ export function GematriaCalculator() {
               (e.currentTarget as HTMLImageElement).style.filter = 'none';
             }}
           />
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            gap: '6px', marginTop: '6px', animation: 'pulse 1.5s infinite',
+          }}>
+            <span style={{ fontSize: '22px' }}>👆</span>
+            <span style={{ fontSize: '13px', color: '#4b0082', fontWeight: 'bold' }}>Click to discuss with MysticMind!</span>
+          </div>
+          <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
         ) : (
           <div className="gematria-logo flex items-center justify-center bg-primary/10 border-2 border-dashed border-primary/30 rounded-lg">
             <div className="text-center p-4">
@@ -248,6 +257,7 @@ export function GematriaCalculator() {
                 <BiblicalVerses text={nameResult.name} gematriaValue={nameResult.result.total} />
                 <BiblicalMatches gematriaValue={nameResult.result.total} />
                 <KabbalisticInterpretation letters={nameResult.result.letters} />
+                <ShareResults name={nameResult.name} total={nameResult.result.total} method={method} />
               </div>
             </div>
           ))}
@@ -274,6 +284,7 @@ export function GematriaCalculator() {
                 <BiblicalVerses text={activeNames.join(' ')} gematriaValue={combinedResult.total} />
                 <BiblicalMatches gematriaValue={combinedResult.total} />
                 <KabbalisticInterpretation letters={combinedResult.letters} />
+                <ShareResults name={activeNames.join(' ')} total={combinedResult.total} method={method} />
               </div>
             </div>
           )}

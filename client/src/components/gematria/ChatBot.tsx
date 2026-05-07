@@ -77,7 +77,7 @@ export function ChatBot({ isOpen, onClose }: ChatBotProps) {
           fontSize: '20px', cursor: 'pointer', padding: '0 4px', lineHeight: 1,
         }}>✕</button>
         <img src="/mysticminded-logo.svg" alt="MysticMind"
-          style={{ width: '50px', height: '50px', borderRadius: '50%', border: '1.5px solid #c9a84c', marginBottom: '6px', marginLeft: '-28px' }} />
+          style={{ width: '44px', height: '44px', borderRadius: '50%', border: '1.5px solid #c9a84c', marginBottom: '6px', marginLeft: '-36px' }} />
         <div style={{ color: '#c9a84c', fontWeight: 'bold', fontSize: '15px' }}>MysticMind ✨</div>
         <div style={{ color: '#a07cc5', fontSize: '11px' }}>Gematria & Kabbalah Guide</div>
       </div>
