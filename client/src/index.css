@@ -65,7 +65,7 @@
   body {
     font-family: 'Georgia', serif;
     @apply bg-background text-foreground;
-    direction: rtl;
+    direction: ltr;
     padding: 8px;
   }
 
