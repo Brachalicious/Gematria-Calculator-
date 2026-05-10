@@ -25,6 +25,10 @@ import { BiblicalNotes } from "./BiblicalNotes";
 import { MeaningfulNotes } from "./MeaningfulNotes";
 import { TikkunOlam } from "./TikkunOlam";
 import { ChatBot } from "./ChatBot";
+import { AuthModal } from "./AuthModal";
+import { useAuth } from "@/hooks/useAuth";
+import { ShareResults } from "./ShareResults";
+import { SaveChart } from "./SaveChart";
 import { setNamesCache } from "@/lib/nameCache";
 
 export function GematriaCalculator() {
@@ -32,6 +36,8 @@ export function GematriaCalculator() {
   const [method, setMethod] = React.useState("standard");
   const [logoError, setLogoError] = React.useState(false);
   const [chatOpen, setChatOpen] = React.useState(false);
+  const [authOpen, setAuthOpen] = React.useState(false);
+  const { user, logout } = useAuth();
   const [showFullList, setShowFullList] = React.useState(false);
   const [keyboardOpen, setKeyboardOpen] = React.useState(false);
   const [activeInput, setActiveInput] = React.useState<number>(0);
@@ -86,7 +92,7 @@ export function GematriaCalculator() {
     result: calculateGematria(name, method),
   }));
 
-  // Always keep the module-level cache current — called on every render
+  // Keep module-level cache current so ChatBot always has the latest names
   setNamesCache(nameResults);
 
   const combinedResult =
@@ -96,25 +102,92 @@ export function GematriaCalculator() {
 
   return (
     <div className="gematria-container">
+      {/* ── Auth bar ── */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "12px",
+          padding: "6px 0",
+        }}
+      >
+        {user ? (
+          <>
+            <div
+              style={{ fontSize: "13px", color: "#4b0082", fontWeight: "bold" }}
+            />
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ fontSize: "12px", color: "#a07cc5" }}>
+                👤 {user.email}
+              </span>
+              <button
+                onClick={logout}
+                style={{
+                  padding: "6px 14px",
+                  borderRadius: "20px",
+                  border: "1px solid rgba(201,168,76,0.4)",
+                  background: "none",
+                  color: "#c9a84c",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                }}
+              >
+                Log Out
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              style={{ fontSize: "13px", color: "#2d0a5a", fontWeight: "bold" }}
+            >
+              ✨ Create an account if you wish to save Gematria charts
+            </div>
+            <button
+              onClick={() => setAuthOpen(true)}
+              style={{
+                padding: "6px 16px",
+                borderRadius: "20px",
+                border: "none",
+                background: "linear-gradient(135deg, #c9a84c, #a07020)",
+                color: "#1a0a2e",
+                fontSize: "12px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                whiteSpace: "nowrap",
+              }}
+            >
+              🔐 Login / Create Account
+            </button>
+          </>
+        )}
+      </div>
+
       <div className="text-center mb-6">
         {!logoError ? (
-          <button
-            onClick={() => setChatOpen((prev) => !prev)}
-            className="mx-auto block cursor-pointer focus:outline-none"
-            aria-label="Open MysticMind chat"
-            style={{ background: "none", border: "none", padding: 0 }}
-          >
+          <>
             <img
-              src="/mysticminded-logo.png"
+              src="/mysticminded-logo.svg"
               alt="Mystic Minded Logo"
               className="gematria-logo"
               onError={handleLogoError}
-              style={{ transition: "transform 0.2s, filter 0.2s" }}
+              onClick={() => setChatOpen(true)}
+              style={{
+                cursor: "pointer",
+                transition: "transform 0.2s, filter 0.2s",
+                display: "block",
+                margin: "0 auto 8px auto",
+                height: "180px",
+                width: "auto",
+                maxWidth: "280px",
+              }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLImageElement).style.transform =
-                  "scale(1.06)";
+                  "scale(1.08)";
                 (e.currentTarget as HTMLImageElement).style.filter =
-                  "drop-shadow(0 0 12px rgba(212,175,55,0.6))";
+                  "drop-shadow(0 0 12px #c9a84c)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLImageElement).style.transform =
@@ -122,7 +195,29 @@ export function GematriaCalculator() {
                 (e.currentTarget as HTMLImageElement).style.filter = "none";
               }}
             />
-          </button>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                marginBottom: "12px",
+                animation: "pulse 1.5s infinite",
+              }}
+            >
+              <span style={{ fontSize: "22px" }}>👆</span>
+              <span
+                style={{
+                  fontSize: "13px",
+                  color: "#4b0082",
+                  fontWeight: "bold",
+                }}
+              >
+                Click to discuss with MysticMinded³³ bot
+              </span>
+            </div>
+            <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
+          </>
         ) : (
           <div className="gematria-logo flex items-center justify-center bg-primary/10 border-2 border-dashed border-primary/30 rounded-lg">
             <div className="text-center p-4">
@@ -142,7 +237,6 @@ export function GematriaCalculator() {
         <p className="text-sm sm:text-base text-primary px-2">
           Discover the spiritual significance and numerical value of your name
         </p>
-        {/* Force refresh 2025-08-06 */}
 
         <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
           <Button
@@ -152,7 +246,6 @@ export function GematriaCalculator() {
           >
             {showFullList ? "Hide Names Database" : "View All Hebrew Names"}
           </Button>
-
           <Button
             onClick={() => {
               const sampleNames = ["דוד", "שרה", "אברהם", "רחל", "משה"];
@@ -308,6 +401,17 @@ export function GematriaCalculator() {
                 <KabbalisticInterpretation
                   letters={nameResult.result.letters}
                 />
+                <ShareResults
+                  name={nameResult.name}
+                  total={nameResult.result.total}
+                  method={method}
+                />
+                <SaveChart
+                  name={nameResult.name}
+                  total={nameResult.result.total}
+                  method={method}
+                  letters={nameResult.result.letters}
+                />
               </div>
             </div>
           ))}
@@ -344,11 +448,22 @@ export function GematriaCalculator() {
                 />
                 <BiblicalMatches gematriaValue={combinedResult.total} />
                 <KabbalisticInterpretation letters={combinedResult.letters} />
+                <ShareResults
+                  name={activeNames.join(" ")}
+                  total={combinedResult.total}
+                  method={method}
+                />
+                <SaveChart
+                  name={activeNames.join(" ")}
+                  total={combinedResult.total}
+                  method={method}
+                  letters={combinedResult.letters}
+                />
               </div>
             </div>
           )}
 
-          {names.some((name, index) => name && !isHebrewText(name)) && (
+          {names.some((name) => name && !isHebrewText(name)) && (
             <Card className="gematria-card border-yellow-500 bg-yellow-50 mt-6">
               <CardContent className="pt-6">
                 <p className="text-yellow-800">
@@ -374,6 +489,7 @@ export function GematriaCalculator() {
         onClose={() => setChatOpen(false)}
         nameResultsProp={nameResults}
       />
+      <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
     </div>
   );
 }
