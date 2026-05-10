@@ -199,7 +199,7 @@ export function GematriaCalculator() {
                 style={{
                   position: "absolute",
                   top: "10px",
-                  right: "-10px",
+                  right: "-40px",
                   background: "linear-gradient(135deg,#4b0082,#2d0a5a)",
                   border: "1.5px solid #c9a84c",
                   borderRadius: "12px",
