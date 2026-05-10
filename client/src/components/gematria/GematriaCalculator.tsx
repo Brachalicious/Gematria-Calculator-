@@ -168,55 +168,56 @@ export function GematriaCalculator() {
       <div className="text-center mb-6">
         {!logoError ? (
           <>
-            <img
-              src="/mysticminded-logo.svg"
-              alt="Mystic Minded Logo"
-              className="gematria-logo"
-              onError={handleLogoError}
-              onClick={() => setChatOpen(true)}
-              style={{
-                cursor: "pointer",
-                transition: "transform 0.2s, filter 0.2s",
-                display: "block",
-                margin: "0 auto 8px auto",
-                height: "180px",
-                width: "auto",
-                maxWidth: "280px",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLImageElement).style.transform =
-                  "scale(1.08)";
-                (e.currentTarget as HTMLImageElement).style.filter =
-                  "drop-shadow(0 0 12px #c9a84c)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLImageElement).style.transform =
-                  "scale(1)";
-                (e.currentTarget as HTMLImageElement).style.filter = "none";
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                marginBottom: "12px",
-                animation: "pulse 1.5s infinite",
-              }}
-            >
-              <span style={{ fontSize: "22px" }}>👆</span>
-              <span
+            {/* Logo + floating "click to discuss" label */}
+            <div style={{ position: "relative", display: "inline-block", margin: "0 auto 8px auto" }}>
+              <img
+                src="/mysticminded-logo.svg"
+                alt="Mystic Minded Logo"
+                className="gematria-logo"
+                onError={handleLogoError}
+                onClick={() => setChatOpen(true)}
                 style={{
-                  fontSize: "13px",
-                  color: "#4b0082",
+                  cursor: "pointer",
+                  transition: "transform 0.2s, filter 0.2s",
+                  display: "block",
+                  height: "180px",
+                  width: "auto",
+                  maxWidth: "280px",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.transform = "scale(1.08)";
+                  (e.currentTarget as HTMLImageElement).style.filter = "drop-shadow(0 0 12px #c9a84c)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.transform = "scale(1)";
+                  (e.currentTarget as HTMLImageElement).style.filter = "none";
+                }}
+              />
+              {/* Floating label — top-right of logo circle */}
+              <div
+                onClick={() => setChatOpen(true)}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "-10px",
+                  background: "linear-gradient(135deg,#4b0082,#2d0a5a)",
+                  border: "1.5px solid #c9a84c",
+                  borderRadius: "12px",
+                  padding: "4px 10px",
+                  fontSize: "11px",
                   fontWeight: "bold",
+                  color: "#c9a84c",
+                  whiteSpace: "nowrap",
+                  cursor: "pointer",
+                  animation: "pulse 1.5s infinite",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                  zIndex: 10,
                 }}
               >
-                Click to discuss with MysticMinded³³ bot
-              </span>
+                💬 Click to chat!
+              </div>
             </div>
-            <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }`}</style>
+            <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }`}</style>
           </>
         ) : (
           <div className="gematria-logo flex items-center justify-center bg-primary/10 border-2 border-dashed border-primary/30 rounded-lg">
