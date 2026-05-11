@@ -276,11 +276,11 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
             role: "assistant",
             content:
               lang === "he"
-                ? `✨ שלום! אני מיסטיק מיינד, המדריך שלך לגמטריה וקבלה. ` +
+                ? `✨ שלום! אני המיסטיק מיינד³³ שלך — המדריך לגמטריה, קבלה ומיסטיקה עברית. ` +
                   `אני רואה שהזנת "${allNames}" במחשבון ` +
                   `(גמטריה של "${primary.name}": ${primary.result.total}). ` +
                   `שאל אותי על המשמעות הרוחנית, אותיות הקבלה, או קשרים לעץ החיים!`
-                : `✨ Shalom! I am MysticMind, your guide to Gematria, Kabbalah, and Hebrew mysticism. ` +
+                : `✨ Shalom! I am your MysticMinded³³ bot — your guide to Gematria, Kabbalah, and Hebrew mysticism. ` +
                   `I can see you've entered "${allNames}" in the calculator ` +
                   `(Gematria of "${primary.name}": ${primary.result.total}). ` +
                   `Ask me about its spiritual meaning, Kabbalistic letters, or Tree of Life connections!`,
@@ -292,9 +292,9 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
             role: "assistant",
             content:
               lang === "he"
-                ? "✨ שלום! אני מיסטיק מיינד, המדריך שלך לגמטריה וקבלה. " +
+                ? "✨ שלום! אני המיסטיק מיינד³³ שלך — המדריך לגמטריה, קבלה ומיסטיקה עברית. " +
                   "הזן שם עברי במחשבון למעלה ואני אמשוך אותו אוטומטית לניתוח רוחני אישי!"
-                : "✨ Shalom! I am MysticMind, your guide to Gematria, Kabbalah, and Hebrew mysticism. " +
+                : "✨ Shalom! I am your MysticMinded³³ bot — your guide to Gematria, Kabbalah, and Hebrew mysticism. " +
                   "Enter a Hebrew name in the calculator above and I'll automatically pull it for personalized spiritual insights!",
           },
         ]);
