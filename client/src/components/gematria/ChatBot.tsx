@@ -92,7 +92,7 @@ const UI = {
     send: "✨ Ask",
     thinking: "✨ Consulting the mystic scrolls...",
     you: "You",
-    bot: "MysticMind",
+    bot: "MysticMinded³³",
   },
   he: {
     title: "מיסטיק מיינד³³ ✨",
@@ -103,7 +103,7 @@ const UI = {
     send: "✨ שאל",
     thinking: "✨ מתייעץ עם ספרי הקבלה...",
     you: "אתה",
-    bot: "מיסטיק מיינד",
+    bot: "MysticMinded³³",
   },
 };
 
