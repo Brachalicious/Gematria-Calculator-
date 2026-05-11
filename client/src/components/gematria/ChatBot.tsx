@@ -367,7 +367,10 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
     const results = getNames();
 
     // Build a context-rich system prompt so the AI answers the SPECIFIC question
-    let systemPrompt = `You are MysticMinded³³, a warm and deeply knowledgeable guide to Gematria, Kabbalah, and Hebrew mysticism. Answer each question specifically — never give the same generic response twice. Be personal, insightful, and varied based on what the user actually asked.
+    const hebrewInstruction = lang === "he" 
+      ? " CRITICAL: ALL responses must be written entirely in Hebrew (עברית). No English words allowed except text titles/URLs." 
+      : "";
+    let systemPrompt = `You are MysticMinded³³, a warm and deeply knowledgeable guide to Gematria, Kabbalah, and Hebrew mysticism.${hebrewInstruction} Answer each question specifically — never give the same generic response twice. Be personal, insightful, and varied based on what the user actually asked.
 
 Always include real, clickable Sefaria source links formatted as [Source Title](https://www.sefaria.org/exact-path) such as:
 - [Sefer Yetzirah 2:1](https://www.sefaria.org/Sefer_Yetzirah.2.1)
@@ -386,7 +389,9 @@ Always include real, clickable Sefaria source links formatted as [Source Title](
 The user has entered Hebrew name(s): ${allNames}.
 Primary name: "${primary.name}", Gematria value: ${primary.result.total}, Letters: ${letters}.
 Answer their SPECIFIC question about "${primary.name}" — if they ask about mission, talk about mission; if they ask about personality, talk about that. Do not just repeat the letter analysis every time. Speak directly to them about their name.
-Respond in ${lang === "he" ? "Hebrew" : "English"}.`;
+${lang === "he" 
+  ? "IMPORTANT: You MUST respond entirely in Hebrew (עברית). Every word of your response must be in Hebrew. Do not use any English except for proper names of texts like Sefer Yetzirah. Format source links in Hebrew like [ספר יצירה ב:א](https://www.sefaria.org/Sefer_Yetzirah.2.1)." 
+  : "Respond in English."}`;
     }
 
     try {
