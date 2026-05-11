@@ -84,7 +84,7 @@ function readNamesFromDOM(): CachedNameResult[] {
 // ---------- UI strings ----------
 const UI = {
   en: {
-    title: "MysticMind ✨",
+    title: "MysticMinded³³ ✨",
     subtitle: "Gematria & Kabbalah Guide",
     analyzing: "Analyzing",
     placeholder: (name: string | null) =>
@@ -95,7 +95,7 @@ const UI = {
     bot: "MysticMind",
   },
   he: {
-    title: "מיסטיק מיינד ✨",
+    title: "מיסטיק מיינד³³ ✨",
     subtitle: "מדריך גמטריה וקבלה",
     analyzing: "מנתח",
     placeholder: (name: string | null) =>
