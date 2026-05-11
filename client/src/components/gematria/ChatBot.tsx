@@ -228,6 +228,9 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
   const [loading, setLoading] = React.useState(false);
   const [lang, setLang] = React.useState<Lang>("en");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const [showHebKeyboard, setShowHebKeyboard] = React.useState(false);
+  const [isRecording, setIsRecording] = React.useState(false);
+  const recognitionRef = React.useRef<any>(null);
 
   // Track whether the chat was previously open so we can detect open transitions
   const wasOpenRef = React.useRef(false);
@@ -387,6 +390,31 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
     }
   };
 
+  const HEBREW_ROWS = [
+    ['א','ב','ג','ד','ה','ו','ז'],
+    ['ח','ט','י','כ','ל','מ','נ'],
+    ['ס','ע','פ','צ','ק','ר','ש'],
+    ['ת','ך','ם','ן','ף','ץ'],
+  ];
+
+  const startVoice = () => {
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) { alert("Voice input is not supported in this browser. Please use Chrome."); return; }
+    if (isRecording) { recognitionRef.current?.stop(); setIsRecording(false); return; }
+    const r = new SR();
+    r.lang = lang === 'he' ? 'he-IL' : 'en-US';
+    r.interimResults = false;
+    r.onstart = () => setIsRecording(true);
+    r.onend = () => setIsRecording(false);
+    r.onerror = () => setIsRecording(false);
+    r.onresult = (e: any) => {
+      const transcript = e.results[0][0].transcript;
+      setInput(prev => prev + (prev ? ' ' : '') + transcript);
+    };
+    recognitionRef.current = r;
+    r.start();
+  };
+
   if (!isOpen) return null;
 
   const displayedName = getNames()[0]?.name ?? null;
@@ -427,11 +455,14 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
           src="/mysticminded-logo.png"
           alt="MysticMind"
           style={{
-            width: "38px",
-            height: "38px",
+            width: "42px",
+            height: "42px",
             borderRadius: "50%",
-            border: "1.5px solid #c9a84c",
+            border: "2px solid #c9a84c",
             flexShrink: 0,
+            objectFit: "cover",
+            objectPosition: "center",
+            background: "#fff",
           }}
         />
 
@@ -591,17 +622,49 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ── Input ── */}
-      <div
-        style={{
-          padding: "10px 14px",
-          borderTop: "1px solid rgba(201,168,76,0.3)",
-          background: "rgba(0,0,0,0.15)",
-          display: "flex",
-          gap: "8px",
-          alignItems: "flex-end",
-        }}
-      >
+      {/* ── Hebrew keyboard panel ── */}
+      {showHebKeyboard && (
+        <div style={{ padding: "8px 10px", borderTop: "1px solid rgba(201,168,76,0.2)", background: "rgba(0,0,0,0.2)" }}>
+          {HEBREW_ROWS.map((row, ri) => (
+            <div key={ri} style={{ display: "flex", justifyContent: "center", gap: "4px", marginBottom: "4px", flexWrap: "wrap" }}>
+              {row.map(letter => (
+                <button
+                  key={letter}
+                  onPointerDown={(e) => { e.preventDefault(); setInput(p => p + letter); }}
+                  style={{
+                    width: "34px", height: "34px",
+                    background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.4)",
+                    borderRadius: "6px", color: "#c9a84c", fontSize: "16px", fontWeight: "bold",
+                    cursor: "pointer", touchAction: "manipulation",
+                  }}
+                >{letter}</button>
+              ))}
+            </div>
+          ))}
+          <div style={{ display: "flex", gap: "6px", justifyContent: "center", marginTop: "4px" }}>
+            <button onPointerDown={(e) => { e.preventDefault(); setInput(p => p.slice(0, -1)); }}
+              style={{ padding: "4px 12px", borderRadius: "6px", background: "rgba(255,80,80,0.2)", border: "1px solid rgba(255,80,80,0.4)", color: "#ff8080", fontSize: "13px", cursor: "pointer" }}>⌫ Delete</button>
+            <button onPointerDown={(e) => { e.preventDefault(); setInput(""); }}
+              style={{ padding: "4px 12px", borderRadius: "6px", background: "rgba(255,80,80,0.15)", border: "1px solid rgba(255,80,80,0.3)", color: "#ff8080", fontSize: "13px", cursor: "pointer" }}>✕ Clear</button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Input row ── */}
+      <div style={{ padding: "10px 14px", borderTop: "1px solid rgba(201,168,76,0.3)", background: "rgba(0,0,0,0.15)", display: "flex", gap: "6px", alignItems: "flex-end" }}>
+        {/* א Hebrew keyboard toggle */}
+        <button
+          onPointerDown={(e) => { e.preventDefault(); setShowHebKeyboard(p => !p); }}
+          title="Hebrew keyboard"
+          style={{
+            width: "34px", height: "34px",
+            background: showHebKeyboard ? "rgba(201,168,76,0.3)" : "rgba(255,255,255,0.07)",
+            border: "1px solid rgba(201,168,76,0.4)", borderRadius: "8px",
+            color: "#c9a84c", fontSize: "15px", fontWeight: "bold", cursor: "pointer", flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >א</button>
+
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -610,39 +673,41 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
           dir={isHe ? "rtl" : "ltr"}
           rows={2}
           style={{
-            flex: 1,
-            background: "rgba(255,255,255,0.07)",
-            border: "1px solid rgba(201,168,76,0.3)",
-            borderRadius: "10px",
-            padding: "8px 10px",
-            color: "#e8d5ff",
-            fontSize: "13px",
-            resize: "none",
-            outline: "none",
-            fontFamily: "sans-serif",
+            flex: 1, background: "rgba(255,255,255,0.07)",
+            border: "1px solid rgba(201,168,76,0.3)", borderRadius: "10px",
+            padding: "8px 10px", color: "#e8d5ff", fontSize: "13px",
+            resize: "none", outline: "none", fontFamily: "sans-serif",
           }}
         />
+
+        {/* 🎤 Mic button */}
+        <button
+          onClick={startVoice}
+          title={isRecording ? "Stop recording" : "Voice input"}
+          style={{
+            width: "34px", height: "34px",
+            background: isRecording ? "rgba(255,60,60,0.4)" : "rgba(255,255,255,0.07)",
+            border: `1px solid ${isRecording ? "rgba(255,60,60,0.7)" : "rgba(201,168,76,0.4)"}`,
+            borderRadius: "8px", color: isRecording ? "#ff6060" : "#c9a84c",
+            fontSize: "16px", cursor: "pointer", flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            animation: isRecording ? "pulse 1s infinite" : "none",
+          }}
+        >🎤</button>
+
+        {/* Send */}
         <button
           onClick={sendMessage}
           disabled={loading || !input.trim()}
           style={{
-            background:
-              loading || !input.trim()
-                ? "rgba(201,168,76,0.3)"
-                : "linear-gradient(135deg, #c9a84c, #a07020)",
-            border: "none",
-            borderRadius: "10px",
+            background: loading || !input.trim() ? "rgba(201,168,76,0.3)" : "linear-gradient(135deg, #c9a84c, #a07020)",
+            border: "none", borderRadius: "10px",
             color: loading || !input.trim() ? "#888" : "#1a0a2e",
             cursor: loading || !input.trim() ? "not-allowed" : "pointer",
-            fontWeight: "bold",
-            fontSize: "13px",
-            padding: "8px 14px",
-            transition: "all 0.2s",
-            flexShrink: 0,
+            fontWeight: "bold", fontSize: "13px", padding: "8px 14px",
+            transition: "all 0.2s", flexShrink: 0,
           }}
-        >
-          {ui.send}
-        </button>
+        >{ui.send}</button>
       </div>
     </div>
   );
