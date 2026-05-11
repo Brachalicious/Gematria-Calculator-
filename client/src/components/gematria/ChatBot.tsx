@@ -451,20 +451,19 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
           background: "rgba(0,0,0,0.25)",
         }}
       >
-        <img
-          src="/mysticminded-logo.png"
-          alt="MysticMind"
-          style={{
-            width: "42px",
-            height: "42px",
-            borderRadius: "50%",
-            border: "2px solid #c9a84c",
-            flexShrink: 0,
-            objectFit: "cover",
-            objectPosition: "center",
+        <div style={{
+            width: "46px", height: "46px", borderRadius: "50%",
+            border: "2px solid #c9a84c", flexShrink: 0,
+            overflow: "hidden", display: "flex",
+            alignItems: "center", justifyContent: "center",
             background: "#fff",
-          }}
-        />
+          }}>
+          <img
+            src="/mysticminded-logo.svg"
+            alt="MysticMind"
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
+          />
+        </div>
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
