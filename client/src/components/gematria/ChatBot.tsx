@@ -259,6 +259,7 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
   const wasOpenRef = React.useRef(false);
   // Track which names we've already greeted for, to detect name changes
   const greetedNamesRef = React.useRef<string>("");
+  const prevLangRef = React.useRef<Lang>(lang);
 
   const ui = UI[lang];
 
@@ -434,6 +435,40 @@ ${lang === "he"
       sendMessage();
     }
   };
+
+
+  // When language is switched while chat is open, re-translate the welcome message
+  React.useEffect(() => {
+    if (lang === prevLangRef.current) return;
+    prevLangRef.current = lang;
+    if (!isOpen) return;
+
+    const results = getNames();
+    const primary = results[0];
+    const newWelcome: Message = primary
+      ? {
+          role: "assistant",
+          content:
+            lang === "he"
+              ? `✨ שלום! אני MysticMinded³³ שלך — המדריך לגמטריה, קבלה ומיסטיקה עברית. ` +
+                `אני רואה שהזנת "${primary.name}" (גמטריה: ${primary.result.total}). ` +
+                `שאל אותי על המשמעות הרוחנית, אותיות הקבלה, או קשרים לעץ החיים!`
+              : `✨ Shalom! I am your MysticMinded³³ bot — your guide to Gematria, Kabbalah, and Hebrew mysticism. ` +
+                `I can see you've entered "${primary.name}" (Gematria: ${primary.result.total}). ` +
+                `Ask me about its spiritual meaning, Kabbalistic letters, or Tree of Life connections!`,
+        }
+      : {
+          role: "assistant",
+          content:
+            lang === "he"
+              ? "✨ שלום! אני MysticMinded³³ שלך — המדריך לגמטריה, קבלה ומיסטיקה עברית. הזן שם עברי במחשבון למעלה!"
+              : "✨ Shalom! I am your MysticMinded³³ bot — your guide to Gematria, Kabbalah, and Hebrew mysticism. Enter a Hebrew name above!",
+        };
+
+    // Replace first message with translated welcome, keep rest of conversation
+    setMessages(prev => [newWelcome, ...prev.slice(1)]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   const HEBREW_ROWS = [
     ['א','ב','ג','ד','ה','ו','ז'],
