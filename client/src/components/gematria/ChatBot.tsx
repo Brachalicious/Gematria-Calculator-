@@ -221,6 +221,28 @@ function buildHebrewResponse(results: CachedNameResult[]): string {
   );
 }
 
+
+// Parse [text](url) markdown links into clickable <a> elements
+function renderMessage(content: string): React.ReactNode[] {
+  const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let key = 0;
+  while ((m = linkRegex.exec(content)) !== null) {
+    if (m.index > last) parts.push(content.slice(last, m.index));
+    parts.push(
+      <a key={key++} href={m[2]} target="_blank" rel="noopener noreferrer"
+        style={{ color: "#c9a84c", textDecoration: "underline", wordBreak: "break-all" }}>
+        {m[1]}
+      </a>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < content.length) parts.push(content.slice(last));
+  return parts;
+}
+
 // ---------- Component ----------
 export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
   const [messages, setMessages] = React.useState<Message[]>([]);
@@ -231,6 +253,7 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
   const [showHebKeyboard, setShowHebKeyboard] = React.useState(false);
   const [isRecording, setIsRecording] = React.useState(false);
   const recognitionRef = React.useRef<any>(null);
+  const nameChangeTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Track whether the chat was previously open so we can detect open transitions
   const wasOpenRef = React.useRef(false);
@@ -302,28 +325,33 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
       return;
     }
 
-    // Chat already open — notify if name changed
+    // Chat already open — notify if name changed (debounced 900ms to avoid per-keystroke spam)
     if (isOpen && namesKey !== greetedNamesRef.current && results.length > 0) {
-      greetedNamesRef.current = namesKey;
-      const primary = results[0];
-      const allNames = results.map((r) => r.name).join(", ");
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            lang === "he"
-              ? `✨ עדכנתי את הניתוח! קלטתי "${allNames}" מהמחשבון ` +
-                `(גמטריה של "${primary.name}": ${primary.result.total}). שאל אותי כל דבר!`
-              : `✨ I've updated my analysis! I picked up "${allNames}" from the calculator ` +
-                `(Gematria of "${primary.name}": ${primary.result.total}). Ask me anything!`,
-        },
-      ]);
+      if (nameChangeTimerRef.current) clearTimeout(nameChangeTimerRef.current);
+      nameChangeTimerRef.current = setTimeout(() => {
+        const latestResults = getNames();
+        const latestKey = latestResults.map((r) => r.name).join(",");
+        if (latestKey === greetedNamesRef.current) return;
+        greetedNamesRef.current = latestKey;
+        if (latestResults.length === 0) return;
+        const primary = latestResults[0];
+        const allNames = latestResults.map((r) => r.name).join(", ");
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content:
+              lang === "he"
+                ? `✨ קלטתי "${allNames}" (גמטריה: ${primary.result.total}). שאל אותי כל דבר!`
+                : `✨ I can see you've entered "${allNames}" (Gematria: ${primary.result.total}). Ask me anything about it!`,
+          },
+        ]);
+      }, 900);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, nameResultsProp, lang]);
 
-  // Send a message
+  // Send a message — always uses the API with name context so every answer is unique
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || loading) return;
@@ -338,22 +366,34 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
 
     const results = getNames();
 
+    // Build a context-rich system prompt so the AI answers the SPECIFIC question
+    let systemPrompt = `You are MysticMinded³³, a warm and deeply knowledgeable guide to Gematria, Kabbalah, and Hebrew mysticism. Answer each question specifically — never give the same generic response twice. Be personal, insightful, and varied based on what the user actually asked.
+
+Always include real, clickable Sefaria source links formatted as [Source Title](https://www.sefaria.org/exact-path) such as:
+- [Sefer Yetzirah 2:1](https://www.sefaria.org/Sefer_Yetzirah.2.1)
+- [Sefer Yetzirah 4:1](https://www.sefaria.org/Sefer_Yetzirah.4.1)
+- [Bahir §17](https://www.sefaria.org/Sefer_HaBahir.17)
+- [Bahir §18](https://www.sefaria.org/Sefer_HaBahir.18)
+- [Zohar Bereishit](https://www.sefaria.org/Zohar.1.1b.1)
+- [Chabad Naming Guide](https://www.chabad.org/library/article_cdo/aid/508007/jewish/What-Name-Should-We-Choose.htm)`;
+
     if (results.length > 0) {
-      const response =
-        lang === "he"
-          ? buildHebrewResponse(results)
-          : buildEnglishResponse(results);
-      setMessages([...newMessages, { role: "assistant", content: response }]);
-      setLoading(false);
-      return;
+      const primary = results[0];
+      const letters = primary.result.letters.map((l: any) => `${l.letter}(${l.value})`).join(", ");
+      const allNames = results.map((r: any) => `${r.name}=${r.result.total}`).join("; ");
+      systemPrompt += `
+
+The user has entered Hebrew name(s): ${allNames}.
+Primary name: "${primary.name}", Gematria value: ${primary.result.total}, Letters: ${letters}.
+Answer their SPECIFIC question about "${primary.name}" — if they ask about mission, talk about mission; if they ask about personality, talk about that. Do not just repeat the letter analysis every time. Speak directly to them about their name.
+Respond in ${lang === "he" ? "Hebrew" : "English"}.`;
     }
 
-    // No name in calculator — fall back to API
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, systemPrompt }),
       });
       const data = await res.json();
       setMessages([
@@ -374,8 +414,8 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
           role: "assistant",
           content:
             lang === "he"
-              ? "הזן שם עברי במחשבון למעלה — אני אמשוך אותו אוטומטית!"
-              : "Enter a Hebrew name in the calculator above — I'll pull it automatically!",
+              ? "שגיאת חיבור. בדוק את החיבור לאינטרנט."
+              : "Connection error. Please check your internet connection.",
         },
       ]);
     } finally {
@@ -581,7 +621,7 @@ export function ChatBot({ isOpen, onClose, nameResultsProp }: ChatBotProps) {
                 textAlign: isHe ? "right" : "left",
               }}
             >
-              {msg.content}
+              {renderMessage(msg.content)}
             </div>
           </div>
         ))}

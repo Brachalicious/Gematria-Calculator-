@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 // MysticMind AI chat endpoint
 app.post('/api/chat', async (req: express.Request, res: express.Response) => {
   try {
-    const { messages } = req.body;
+    const { messages, systemPrompt } = req.body;
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       res.status(500).json({ error: 'Missing OpenAI API key' });
@@ -62,7 +62,7 @@ app.post('/api/chat', async (req: express.Request, res: express.Response) => {
         messages: [
           {
             role: 'system',
-            content: `You are MysticMind, a mystical and spiritual AI assistant specializing in Gematria, Kabbalah, Hebrew numerology, and Jewish mysticism. Be wise, warm, and insightful. Draw on the teachings of Sefer HaBahir, Sefer Yetzirah, and Kabbalistic tradition when relevant.${bahirContext}${yetzirahContext}`,
+            content: systemPrompt || `You are MysticMinded³³, a warm and deeply knowledgeable guide to Gematria, Kabbalah, and Hebrew mysticism. Answer each question specifically and personally — never repeat the same generic analysis. Include real clickable Sefaria links formatted as [Title](https://www.sefaria.org/...). Be wise, warm, and insightful.${bahirContext}${yetzirahContext}`,
           },
           ...messages,
         ],
