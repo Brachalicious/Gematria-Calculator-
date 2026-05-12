@@ -30,6 +30,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ShareResults } from "./ShareResults";
 import { SaveChart } from "./SaveChart";
 import { setNamesCache } from "@/lib/nameCache";
+import { useAppLang } from "@/lib/langStore";
 
 export function GematriaCalculator() {
   const [names, setNames] = React.useState<string[]>(["", "", "", "", ""]);
@@ -38,6 +39,7 @@ export function GematriaCalculator() {
   const [chatOpen, setChatOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(false);
   const { user, logout } = useAuth();
+  const [appLang, setAppLang] = useAppLang();
   const [showFullList, setShowFullList] = React.useState(false);
   const [keyboardOpen, setKeyboardOpen] = React.useState(false);
   const [activeInput, setActiveInput] = React.useState<number>(0);
@@ -101,7 +103,7 @@ export function GematriaCalculator() {
       : null;
 
   return (
-    <div className="gematria-container">
+    <div className="gematria-container" dir={appLang === "he" ? "rtl" : "ltr"}>
       {/* ── Auth bar ── */}
       <div
         style={{
@@ -245,7 +247,7 @@ export function GematriaCalculator() {
             variant={showFullList ? "secondary" : "outline"}
             className="gematria-button w-full sm:w-auto"
           >
-            {showFullList ? "Hide Names Database" : "View All Hebrew Names"}
+            {showFullList ? (appLang === "he" ? "הסתר רשימה" : "Hide Names Database") : (appLang === "he" ? "צפה בכל השמות העבריים" : "View All Hebrew Names")}
           </Button>
           <Button
             onClick={() => {
@@ -259,7 +261,7 @@ export function GematriaCalculator() {
             variant="outline"
             className="gematria-button w-full sm:w-auto"
           >
-            🌟 Try Sample Names
+            {appLang === "he" ? "🌟 נסה שמות לדוגמה" : "🌟 Try Sample Names"}
           </Button>
         </div>
       </div>
@@ -270,7 +272,7 @@ export function GematriaCalculator() {
         <>
           <Card className="gematria-card mb-6">
             <CardHeader>
-              <CardTitle>Input</CardTitle>
+              <CardTitle>{appLang === "he" ? "קלט" : "Input"}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {[0, 1, 2, 3, 4].map((index) => (
@@ -328,10 +330,10 @@ export function GematriaCalculator() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="standard">Standard (Rishon)</SelectItem>
-                    <SelectItem value="ordinal">Ordinal (Seder)</SelectItem>
-                    <SelectItem value="reduced">Reduced (Katan)</SelectItem>
-                    <SelectItem value="integral">Integral Reduced</SelectItem>
+                    <SelectItem value="standard">{appLang === "he" ? "סטנדרטי (ראשון)" : "Standard (Rishon)"}</SelectItem>
+                    <SelectItem value="ordinal">{appLang === "he" ? "סדרי (סדר)" : "Ordinal (Seder)"}</SelectItem>
+                    <SelectItem value="reduced">{appLang === "he" ? "מצומצם (קטן)" : "Reduced (Katan)"}</SelectItem>
+                    <SelectItem value="integral">{appLang === "he" ? "מצומצם אינטגרלי" : "Integral Reduced"}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -343,7 +345,7 @@ export function GematriaCalculator() {
                     variant="outline"
                     className="bg-red-500 text-white hover:bg-red-600 border-red-500"
                   >
-                    🗑️ Clear All Names
+                    {appLang === "he" ? "🗑️ נקה את כל השמות" : "🗑️ Clear All Names"}
                   </Button>
                 </div>
               )}
@@ -352,7 +354,7 @@ export function GematriaCalculator() {
 
           {activeNames.length > 0 && (
             <div className="names-summary">
-              <h3 className="text-xl font-bold">Names Analysis Summary</h3>
+              <h3 className="text-xl font-bold">{appLang === "he" ? "סיכום ניתוח שמות" : "Names Analysis Summary"}</h3>
               <div className="names-list">
                 {activeNames.map((name, index) => (
                   <div key={index} className="name-chip">

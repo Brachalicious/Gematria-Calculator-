@@ -3,13 +3,13 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCOZlGP9cnkES6gJbnOneVGu9jxu548qAE",
-  authDomain: "mysticminded33-gematria-calc.firebaseapp.com",
-  projectId: "mysticminded33-gematria-calc",
-  storageBucket: "mysticminded33-gematria-calc.firebasestorage.app",
-  messagingSenderId: "295647948321",
-  appId: "1:295647948321:web:795bcb5a43ba0b99583d60",
-  measurementId: "G-YCV4SYZ3WH"
+  apiKey: "AIzaSyCnKQNnqSZaqB-iFHrUH_B2mK0T8V2mN1Q",
+  authDomain: "gematria-calculater.firebaseapp.com",
+  projectId: "gematria-calculater",
+  storageBucket: "gematria-calculater.firebasestorage.app",
+  messagingSenderId: "1087038497278",
+  appId: "1:1087038497278:web:a42dfef9fbbadb1f44a0af",
+  measurementId: "G-Z1F9D20WSE"
 };
 
 const app = initializeApp(firebaseConfig);
