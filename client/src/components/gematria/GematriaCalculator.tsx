@@ -32,7 +32,11 @@ import { SaveChart } from "./SaveChart";
 import { setNamesCache } from "@/lib/nameCache";
 import { useAppLang } from "@/lib/langStore";
 
-export function GematriaCalculator() {
+interface GematriaCalculatorProps {
+  onNamesChange?: (names: string[], values: number[]) => void;
+}
+
+export function GematriaCalculator({ onNamesChange }: GematriaCalculatorProps = {}) {
   const [names, setNames] = React.useState<string[]>(["", "", "", "", ""]);
   const [method, setMethod] = React.useState("standard");
   const [logoError, setLogoError] = React.useState(false);
@@ -44,6 +48,11 @@ export function GematriaCalculator() {
   const [keyboardOpen, setKeyboardOpen] = React.useState(false);
   const [activeInput, setActiveInput] = React.useState<number>(0);
   const { calculateGematria, isHebrewText } = useGematria();
+  const [parentName, setParentName] = React.useState('');
+  const [relation, setRelation] = React.useState<'ben' | 'bat'>('ben');
+  const [parentType, setParentType] = React.useState<'father' | 'mother'>('father');
+  const [hebrewBirthdayDay, setHebrewBirthdayDay] = React.useState<number>(0);
+  const [hebrewBirthdayMonth, setHebrewBirthdayMonth] = React.useState<number>(0);
 
   const handleNameChange = (index: number, value: string) => {
     const newNames = [...names];
@@ -96,6 +105,17 @@ export function GematriaCalculator() {
 
   // Keep module-level cache current so ChatBot always has the latest names
   setNamesCache(nameResults);
+
+  // Report names up to App for Numerology comparison
+  React.useEffect(() => {
+    if (onNamesChange) {
+      onNamesChange(
+        nameResults.map(r => r.name),
+        nameResults.map(r => r.result.total)
+      );
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nameResults.map(r => r.name + r.result.total).join(',')]);
 
   const combinedResult =
     activeNames.length > 1
@@ -216,7 +236,7 @@ export function GematriaCalculator() {
                   zIndex: 10,
                 }}
               >
-                💬 Click to chat!
+                💬 Click MysticMinded³³ bot to discuss
               </div>
             </div>
             <style>{`@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }`}</style>
@@ -349,6 +369,166 @@ export function GematriaCalculator() {
                   </Button>
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          {/* ── Parent Name Card ── */}
+          <Card className="gematria-card mb-6">
+            <CardHeader>
+              <CardTitle>👨‍👩‍👧 Parent's Name — Spiritual Name Formula</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p style={{ fontSize: '12px', color: '#a07cc5' }}>
+                In Jewish tradition, your full spiritual name is <em>Name ben/bat Parent's Name</em>. This formula is used in prayers (Misheberach), Torah aliyot, and Kabbalistic teachings. The Ari taught it reveals your <strong>Shoresh HaNeshama</strong> — Root of the Soul.
+              </p>
+              {/* Ben / Bat toggle */}
+              <div className="space-y-1">
+                <Label className="font-bold">You are a:</Label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {(['ben', 'bat'] as const).map(r => (
+                    <button key={r} onClick={() => setRelation(r)} style={{
+                      padding: '6px 20px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px',
+                      background: relation === r ? 'linear-gradient(135deg,#c9a84c,#a07020)' : 'transparent',
+                      color: relation === r ? '#1a0a2e' : '#c9a84c',
+                      border: '1px solid rgba(201,168,76,0.5)',
+                    }}>
+                      {r === 'ben' ? 'בן Ben (Son)' : 'בת Bat (Daughter)'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Father / Mother toggle */}
+              <div className="space-y-1">
+                <Label className="font-bold">Whose name to use:</Label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {(['father', 'mother'] as const).map(p => (
+                    <button key={p} onClick={() => setParentType(p)} style={{
+                      padding: '6px 20px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px',
+                      background: parentType === p ? 'linear-gradient(135deg,#c9a84c,#a07020)' : 'transparent',
+                      color: parentType === p ? '#1a0a2e' : '#c9a84c',
+                      border: '1px solid rgba(201,168,76,0.5)',
+                    }}>
+                      {p === 'father' ? "Father's Name (אב)" : "Mother's Name (אם)"}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Parent name input */}
+              <div className="space-y-1">
+                <Label className="font-bold text-lg">
+                  {parentType === 'father' ? "Father's Hebrew Name" : "Mother's Hebrew Name"}
+                </Label>
+                <div className="name-input-container">
+                  <Input
+                    value={parentName}
+                    onChange={e => setParentName(e.target.value)}
+                    placeholder="Enter Hebrew name..."
+                    className="gematria-input text-right text-lg"
+                    dir="rtl"
+                  />
+                  {parentName && (
+                    <Button onClick={() => setParentName('')} className="ml-2 px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600" type="button">✕</Button>
+                  )}
+                </div>
+              </div>
+              {/* Full spiritual name display */}
+              {names[0] && parentName && (
+                <div style={{ textAlign: 'center', padding: '14px', background: 'rgba(201,168,76,0.1)', borderRadius: '12px', border: '1px solid rgba(201,168,76,0.3)' }}>
+                  <div style={{ fontSize: '11px', color: '#a07cc5', marginBottom: '6px' }}>✨ Your Full Spiritual Name:</div>
+                  <div style={{ fontSize: '22px', fontWeight: 'bold', color: '#c9a84c', direction: 'rtl', letterSpacing: '2px' }}>
+                    {names[0]} {relation === 'ben' ? 'בן' : 'בת'} {parentName}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#a07cc5', marginTop: '6px' }}>
+                    Gematria: {calculateGematria(names[0], method).total} + {relation === 'ben' ? '52 (בן)' : '402 (בת)'} + {calculateGematria(parentName, method).total} = <strong style={{ color: '#c9a84c' }}>{calculateGematria(names[0], method).total + (relation === 'ben' ? 52 : 402) + calculateGematria(parentName, method).total}</strong>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* ── Hebrew Birthday Card ── */}
+          <Card className="gematria-card mb-6">
+            <CardHeader>
+              <CardTitle>🎂 Hebrew Birthday</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p style={{ fontSize: '12px', color: '#a07cc5' }}>
+                The Lubavitcher Rebbe taught that your Hebrew birthday is your personal <strong>Rosh Hashana</strong> — a day of special spiritual power when your mazal shines brightest. (
+                <a href="https://www.chabad.org/calendar/birthday" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a84c' }}>Find your Hebrew birthday ↗</a>)
+              </p>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+                <div className="space-y-1" style={{ flex: '0 0 90px' }}>
+                  <Label className="font-bold">Day (1–30)</Label>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={30}
+                    value={hebrewBirthdayDay || ''}
+                    onChange={e => setHebrewBirthdayDay(Math.min(30, Math.max(0, Number(e.target.value))))}
+                    placeholder="e.g. 18"
+                    className="gematria-input"
+                  />
+                </div>
+                <div className="space-y-1" style={{ flex: '1 1 180px' }}>
+                  <Label className="font-bold">Month</Label>
+                  <Select value={hebrewBirthdayMonth ? String(hebrewBirthdayMonth) : ''} onValueChange={v => setHebrewBirthdayMonth(Number(v))}>
+                    <SelectTrigger className="gematria-input"><SelectValue placeholder="Select Hebrew month..." /></SelectTrigger>
+                    <SelectContent>
+                      {[
+                        {v:1,l:'Nisan (ניסן) — Aries · ה'},{v:2,l:'Iyar (אייר) — Taurus · ו'},
+                        {v:3,l:'Sivan (סיון) — Gemini · ז'},{v:4,l:'Tammuz (תמוז) — Cancer · ח'},
+                        {v:5,l:'Av (אב) — Leo · ט'},{v:6,l:'Elul (אלול) — Virgo · י'},
+                        {v:7,l:'Tishrei (תשרי) — Libra · ל'},{v:8,l:'Cheshvan (חשון) — Scorpio · נ'},
+                        {v:9,l:'Kislev (כסלו) — Sagittarius · ס'},{v:10,l:'Tevet (טבת) — Capricorn · ע'},
+                        {v:11,l:'Shevat (שבט) — Aquarius · צ'},{v:12,l:'Adar (אדר) — Pisces · ק'},
+                      ].map(m => <SelectItem key={m.v} value={String(m.v)}>{m.l}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              {/* Birthday summary */}
+              {hebrewBirthdayDay > 0 && hebrewBirthdayMonth > 0 && (() => {
+                const monthData = [
+                  {name:'Nisan',heb:'ניסן',letter:'ה',mazal:'Aries (טלה)',tribe:'Yehuda',sense:'Speech',quality:'Month of miracles, redemption & new beginnings'},
+                  {name:'Iyar',heb:'אייר',letter:'ו',mazal:'Taurus (שור)',tribe:'Yissachar',sense:'Thought',quality:'Month of healing — Ani Hashem Rofecha'},
+                  {name:'Sivan',heb:'סיון',letter:'ז',mazal:'Gemini (תאומים)',tribe:'Zevulun',sense:'Walking',quality:'Month of Torah — revelation at Sinai'},
+                  {name:'Tammuz',heb:'תמוז',letter:'ח',mazal:'Cancer (סרטן)',tribe:'Reuven',sense:'Sight',quality:'Month of vision — rectifying how we see'},
+                  {name:'Av',heb:'אב',letter:'ט',mazal:'Leo (אריה)',tribe:'Shimon',sense:'Hearing',quality:'Strength through mourning — light from darkness'},
+                  {name:'Elul',heb:'אלול',letter:'י',mazal:'Virgo (בתולה)',tribe:'Gad',sense:'Action',quality:"Month of return — Ani L'Dodi V'Dodi Li"},
+                  {name:'Tishrei',heb:'תשרי',letter:'ל',mazal:'Libra (מאזניים)',tribe:'Ephraim',sense:'Coition',quality:'Judgment & joy — Rosh Hashana, Yom Kippur, Sukkot'},
+                  {name:'Cheshvan',heb:'חשון',letter:'נ',mazal:'Scorpio (עקרב)',tribe:'Menashe',sense:'Smell',quality:'Pure month of internalization & depth'},
+                  {name:'Kislev',heb:'כסלו',letter:'ס',mazal:'Sagittarius (קשת)',tribe:'Benjamin',sense:'Sleep',quality:'Light in darkness — Chanukah'},
+                  {name:'Tevet',heb:'טבת',letter:'ע',mazal:'Capricorn (גדי)',tribe:'Dan',sense:'Anger',quality:'Rectifying anger — seeing challenges clearly'},
+                  {name:'Shevat',heb:'שבט',letter:'צ',mazal:'Aquarius (דלי)',tribe:'Asher',sense:'Taste',quality:"Nourishment — Tu B'Shevat, New Year of Trees"},
+                  {name:'Adar',heb:'אדר',letter:'ק',mazal:'Pisces (דגים)',tribe:'Naftali',sense:'Laughter',quality:'Joy increases — Purim, hidden miracles'},
+                ][hebrewBirthdayMonth - 1];
+                return (
+                  <div style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: '12px', padding: '14px' }}>
+                    <div style={{ fontWeight: 800, color: '#c9a84c', fontSize: '15px', marginBottom: '8px' }}>
+                      🌟 {hebrewBirthdayDay} {monthData.heb} — Spiritual Profile
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px', fontSize: '12px' }}>
+                      {[
+                        { label: 'Letter', value: `${monthData.letter} (${monthData.name})` },
+                        { label: 'Mazal', value: monthData.mazal },
+                        { label: 'Tribe', value: monthData.tribe },
+                        { label: 'Sense', value: monthData.sense },
+                      ].map(({ label, value }) => (
+                        <div key={label} style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '8px', textAlign: 'center' }}>
+                          <div style={{ color: '#a07cc5', fontSize: '10px', marginBottom: '2px' }}>{label}</div>
+                          <div style={{ color: '#e8d5ff', fontWeight: 700 }}>{value}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ color: '#d4b8f0', fontSize: '12px', marginTop: '10px', fontStyle: 'italic' }}>
+                      ✨ {monthData.quality}
+                    </div>
+                    <div style={{ color: '#a07cc5', fontSize: '11px', marginTop: '6px' }}>
+                      Source: Sefer Yetzirah 3:1-7 (Ari's tradition) — the 12 simple Hebrew letters govern the 12 months, mazalot, tribes & senses.
+                    </div>
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
 
